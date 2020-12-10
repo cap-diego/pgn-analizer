@@ -1,0 +1,8 @@
+[Event "World cup"]
+
+1.e4 {Nos vamos a olvidar de poner el resultado al final} e5 2. Nf3
+
+
+[Event "Magnus Carlsen Invitational"]
+
+1. d4 Nf6 1/2-1/2

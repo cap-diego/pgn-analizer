@@ -1,0 +1,1 @@
+1.e4 e5 2.Nf3 {Un comentario que abre con llave y cierra con parentesis) Nf6 1-0

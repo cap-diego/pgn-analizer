@@ -1,0 +1,9 @@
+[Site "Mannheim GER"]
+[Date "1914.08.01"]
+[Round "11"]
+[Result "1-0"]
+[BlackElo "?"]
+
+1. h1 xh1 2. Ph8 aa1 3. 8a1 Paa1 4. P8a1 h8h8 5. Pxh8 axa1 6. 8xa1 Pa1a1 7. Paxa1 P8xa1 8. h8xh8 Pa1xa1
+9. h1+ Ph8+ 10. aa1+ 8a1+ 11. Paa1+ P8a1+ 12. h8h8+ Pa1a1+ 13. xh1+ Pxh8+ 14. axa1+ 8xa1+ 15. Paxa1+ P8xa1+ 16. h8xh8+ Pa1xa1+
+17. h1# Ph8# 18. aa1# 8a1# 19. Paa1# P8a1# 20. h8h8# Pa1a1# 21. xh1# Pxh8# 22. axa1# 8xa1# 23. Paxa1# P8xa1# 24. h8xh8# Pa1xa1# 1-0
