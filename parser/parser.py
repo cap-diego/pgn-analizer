@@ -28,31 +28,31 @@ def p_movimiento_final(p):
     pass
 
 def p_jugada(p):
-    '''JUGADA   :   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
-                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
-                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
-                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO 
-                |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
-                |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
-                |   NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
-                |   NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
-                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO MOVIMIENTO COMENTARIO
-                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO MOVIMIENTO
-                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO MOVIMIENTO COMENTARIO
-                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO MOVIMIENTO 
-                |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO MOVIMIENTO COMENTARIO
-                |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO MOVIMIENTO
-                |   NUMERO_JUGADA punto MOVIMIENTO MOVIMIENTO COMENTARIO
-                |   NUMERO_JUGADA punto MOVIMIENTO MOVIMIENTO'''
+    '''JUGADA   :   numero_jugada_blanco COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+                |   numero_jugada_blanco COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+                |   numero_jugada_blanco COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+                |   numero_jugada_blanco COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO 
+                |   numero_jugada_blanco MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+                |   numero_jugada_blanco MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+                |   numero_jugada_blanco MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+                |   numero_jugada_blanco MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+                |   numero_jugada_blanco COMENTARIO MOVIMIENTO COMENTARIO MOVIMIENTO COMENTARIO
+                |   numero_jugada_blanco COMENTARIO MOVIMIENTO COMENTARIO MOVIMIENTO
+                |   numero_jugada_blanco COMENTARIO MOVIMIENTO MOVIMIENTO COMENTARIO
+                |   numero_jugada_blanco COMENTARIO MOVIMIENTO MOVIMIENTO 
+                |   numero_jugada_blanco MOVIMIENTO COMENTARIO MOVIMIENTO COMENTARIO
+                |   numero_jugada_blanco MOVIMIENTO COMENTARIO MOVIMIENTO
+                |   numero_jugada_blanco MOVIMIENTO MOVIMIENTO COMENTARIO
+                |   numero_jugada_blanco MOVIMIENTO MOVIMIENTO'''
     pass
 
-def p_numero_jugada(p):
-    'NUMERO_JUGADA  :   numero'
-    pass
+# def p_numero_jugada(p):
+#     'NUMERO_JUGADA  :   numero'
+#     pass
 
 def p_numero_jugada_opcional(p):
-    '''NUMERO_JUGADA_OPCIONAL   :   NUMERO_JUGADA punto punto punto COMENTARIO
-                                |   NUMERO_JUGADA punto punto punto'''
+    '''NUMERO_JUGADA_OPCIONAL   :   numero_jugada_negro COMENTARIO
+                                |   numero_jugada_negro'''
     pass
 
 def p_movimiento(p):
@@ -80,6 +80,7 @@ def p_movimiento(p):
                     |   POS
                     |   enroque_1
                     |   enroque_2'''
+                    
     pass
 
 # def p_equis(p):
@@ -127,8 +128,8 @@ def p_comentario_real(p):
     pass
 
 def p_movimiento_opcional(p):
-    '''MOVIMIENTO_OPCIONAL  :   NUMERO_OPCIONAL MOVIMIENTO
-                            |   MOVIMIENTO'''
+    '''MOVIMIENTO_OPCIONAL  :   NUMERO_OPCIONAL token_movimiento
+                            |   token_movimiento'''
     pass
 
 def p_numero_opcional(p):
