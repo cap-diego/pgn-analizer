@@ -53,7 +53,7 @@ t_empate  = r'1\/2-1\/2'
 # t_parentecis_abre  = r'\('
 # t_parentecis_cierra  = r'\)'
 t_comilla  = r'\"'
-t_punto  = r'\.'
+# t_punto  = r'\.'
 t_jaque  = r'\+'
 t_jaque_mate  = r'\#'
 t_pieza  = r'[PNBRQK]'
@@ -88,7 +88,7 @@ def t_parentecis_cierra(t):
     return t
 
 def t_palabra(t):
-    r'[^\s]*'
+    r'[^\s]+'
 
     # Matchea con todo lo que no esté separado por espacios
     # Hay que re tokenizar todos los valores a mano
