@@ -28,6 +28,7 @@ tokens = (
 'fila',
 'palabra',
 'numero',
+'equis',
 )
 
 # Regular expression rules for simple tokens
@@ -50,6 +51,7 @@ t_pieza  = r'[PNBRQK]'
 t_columna  = r'[a-h]'
 t_fila  = r'[1-8]'
 t_palabra = r'[a-zA-Z]+'
+t_equis = r'x'
 
 # A regular expression rule with some action code
 def t_numero(t):
