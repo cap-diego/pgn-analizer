@@ -1,0 +1,1803 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> S
+Rule 1     S -> METADATA JUGADAS
+Rule 2     METADATA -> ITEM_METADATA METADATA
+Rule 3     METADATA -> lambda
+Rule 4     ITEM_METADATA -> corchete_abre palabra comilla palabra comilla corchete_cierra
+Rule 5     JUGADAS -> JUGADA JUGADAS
+Rule 6     JUGADAS -> MOVIMIENTO_FINAL
+Rule 7     MOVIMIENTO_FINAL -> gano_blanco
+Rule 8     MOVIMIENTO_FINAL -> gano_negro
+Rule 9     MOVIMIENTO_FINAL -> empate
+Rule 10    JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+Rule 11    JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+Rule 12    JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+Rule 13    JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+Rule 14    JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+Rule 15    JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+Rule 16    JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+Rule 17    JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+Rule 18    NUMERO_JUGADA -> numero
+Rule 19    NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto COMENTARIO
+Rule 20    NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto
+Rule 21    NUMERO_JUGADA_OPCIONAL -> lambda
+Rule 22    MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL
+Rule 23    MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL
+Rule 24    MOVIMIENTO -> PIEZA X POS ESPECIAL
+Rule 25    MOVIMIENTO -> PIEZA POS ESPECIAL
+Rule 26    MOVIMIENTO -> enroque_1 ESPECIAL
+Rule 27    MOVIMIENTO -> enroque_2 ESPECIAL
+Rule 28    X -> equis
+Rule 29    POS_OPCIONAL -> COLUMNA FILA
+Rule 30    POS_OPCIONAL -> COLUMNA
+Rule 31    POS_OPCIONAL -> FILA
+Rule 32    POS -> COLUMNA FILA
+Rule 33    ESPECIAL -> jaque_mate
+Rule 34    ESPECIAL -> jaque
+Rule 35    ESPECIAL -> lambda
+Rule 36    PIEZA -> pieza
+Rule 37    PIEZA -> lambda
+Rule 38    COLUMNA -> columna
+Rule 39    FILA -> fila
+Rule 40    COMENTARIO -> llave_abre COM llave_cierra
+Rule 41    COMENTARIO -> parentecis_abre COM parentecis_cierra
+Rule 42    COMENTARIO -> llave_abre llave_cierra
+Rule 43    COMENTARIO -> parentecis_abre parentecis_cierra
+Rule 44    COM -> COMENTARIO_REAL COM
+Rule 45    COM -> MOVIMIENTO_OPCIONAL COM
+Rule 46    COM -> COMENTARIO COM
+Rule 47    COM -> COMENTARIO_REAL
+Rule 48    COM -> MOVIMIENTO_OPCIONAL
+Rule 49    COM -> COMENTARIO
+Rule 50    COMENTARIO_REAL -> palabra COMENTARIO_REAL
+Rule 51    COMENTARIO_REAL -> palabra
+Rule 52    MOVIMIENTO_OPCIONAL -> NUMERO_OPCIONAL MOVIMIENTO
+Rule 53    NUMERO_OPCIONAL -> NUMERO_JUGADA PUNTOS_OPCIONALES
+Rule 54    PUNTOS_OPCIONALES -> punto
+Rule 55    PUNTOS_OPCIONALES -> punto punto punto
+Rule 56    PUNTOS_OPCIONALES -> lambda
+Rule 57    lambda -> <empty>
+
+Terminals, with rules where they appear
+
+columna              : 38
+comilla              : 4 4
+corchete_abre        : 4
+corchete_cierra      : 4
+empate               : 9
+enroque_1            : 26
+enroque_2            : 27
+equis                : 28
+error                : 
+fila                 : 39
+gano_blanco          : 7
+gano_negro           : 8
+jaque                : 34
+jaque_mate           : 33
+llave_abre           : 40 42
+llave_cierra         : 40 42
+numero               : 18
+palabra              : 4 4 50 51
+parentecis_abre      : 41 43
+parentecis_cierra    : 41 43
+pieza                : 36
+punto                : 10 11 12 13 14 15 16 17 19 19 19 20 20 20 54 55 55 55
+
+Nonterminals, with rules where they appear
+
+COLUMNA              : 29 30 32
+COM                  : 40 41 44 45 46
+COMENTARIO           : 10 10 10 11 11 12 12 13 14 14 15 16 19 46 49
+COMENTARIO_REAL      : 44 47 50
+ESPECIAL             : 22 23 24 25 26 27
+FILA                 : 29 31 32
+ITEM_METADATA        : 2
+JUGADA               : 5
+JUGADAS              : 1 5
+METADATA             : 1 2
+MOVIMIENTO           : 10 10 11 11 12 12 13 13 14 14 15 15 16 16 17 17 52
+MOVIMIENTO_FINAL     : 6
+MOVIMIENTO_OPCIONAL  : 45 48
+NUMERO_JUGADA        : 10 11 12 13 14 15 16 17 19 20 53
+NUMERO_JUGADA_OPCIONAL : 10 11 12 13 14 15 16 17
+NUMERO_OPCIONAL      : 52
+PIEZA                : 22 23 24 25
+POS                  : 22 23 24 25
+POS_OPCIONAL         : 22 23
+PUNTOS_OPCIONALES    : 53
+S                    : 0
+X                    : 22 24
+lambda               : 3 21 35 37 56
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . S
+    (1) S -> . METADATA JUGADAS
+    (2) METADATA -> . ITEM_METADATA METADATA
+    (3) METADATA -> . lambda
+    (4) ITEM_METADATA -> . corchete_abre palabra comilla palabra comilla corchete_cierra
+    (57) lambda -> .
+
+    corchete_abre   shift and go to state 5
+    gano_blanco     reduce using rule 57 (lambda -> .)
+    gano_negro      reduce using rule 57 (lambda -> .)
+    empate          reduce using rule 57 (lambda -> .)
+    numero          reduce using rule 57 (lambda -> .)
+
+    S                              shift and go to state 1
+    METADATA                       shift and go to state 2
+    ITEM_METADATA                  shift and go to state 3
+    lambda                         shift and go to state 4
+
+state 1
+
+    (0) S' -> S .
+
+
+
+state 2
+
+    (1) S -> METADATA . JUGADAS
+    (5) JUGADAS -> . JUGADA JUGADAS
+    (6) JUGADAS -> . MOVIMIENTO_FINAL
+    (10) JUGADA -> . NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (11) JUGADA -> . NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (12) JUGADA -> . NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (13) JUGADA -> . NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (14) JUGADA -> . NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (15) JUGADA -> . NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (16) JUGADA -> . NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (17) JUGADA -> . NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (7) MOVIMIENTO_FINAL -> . gano_blanco
+    (8) MOVIMIENTO_FINAL -> . gano_negro
+    (9) MOVIMIENTO_FINAL -> . empate
+    (18) NUMERO_JUGADA -> . numero
+
+    gano_blanco     shift and go to state 10
+    gano_negro      shift and go to state 11
+    empate          shift and go to state 12
+    numero          shift and go to state 13
+
+    JUGADAS                        shift and go to state 6
+    JUGADA                         shift and go to state 7
+    MOVIMIENTO_FINAL               shift and go to state 8
+    NUMERO_JUGADA                  shift and go to state 9
+
+state 3
+
+    (2) METADATA -> ITEM_METADATA . METADATA
+    (2) METADATA -> . ITEM_METADATA METADATA
+    (3) METADATA -> . lambda
+    (4) ITEM_METADATA -> . corchete_abre palabra comilla palabra comilla corchete_cierra
+    (57) lambda -> .
+
+    corchete_abre   shift and go to state 5
+    gano_blanco     reduce using rule 57 (lambda -> .)
+    gano_negro      reduce using rule 57 (lambda -> .)
+    empate          reduce using rule 57 (lambda -> .)
+    numero          reduce using rule 57 (lambda -> .)
+
+    ITEM_METADATA                  shift and go to state 3
+    METADATA                       shift and go to state 14
+    lambda                         shift and go to state 4
+
+state 4
+
+    (3) METADATA -> lambda .
+
+    gano_blanco     reduce using rule 3 (METADATA -> lambda .)
+    gano_negro      reduce using rule 3 (METADATA -> lambda .)
+    empate          reduce using rule 3 (METADATA -> lambda .)
+    numero          reduce using rule 3 (METADATA -> lambda .)
+
+
+state 5
+
+    (4) ITEM_METADATA -> corchete_abre . palabra comilla palabra comilla corchete_cierra
+
+    palabra         shift and go to state 15
+
+
+state 6
+
+    (1) S -> METADATA JUGADAS .
+
+    $end            reduce using rule 1 (S -> METADATA JUGADAS .)
+
+
+state 7
+
+    (5) JUGADAS -> JUGADA . JUGADAS
+    (5) JUGADAS -> . JUGADA JUGADAS
+    (6) JUGADAS -> . MOVIMIENTO_FINAL
+    (10) JUGADA -> . NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (11) JUGADA -> . NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (12) JUGADA -> . NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (13) JUGADA -> . NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (14) JUGADA -> . NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (15) JUGADA -> . NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (16) JUGADA -> . NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (17) JUGADA -> . NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (7) MOVIMIENTO_FINAL -> . gano_blanco
+    (8) MOVIMIENTO_FINAL -> . gano_negro
+    (9) MOVIMIENTO_FINAL -> . empate
+    (18) NUMERO_JUGADA -> . numero
+
+    gano_blanco     shift and go to state 10
+    gano_negro      shift and go to state 11
+    empate          shift and go to state 12
+    numero          shift and go to state 13
+
+    JUGADA                         shift and go to state 7
+    JUGADAS                        shift and go to state 16
+    MOVIMIENTO_FINAL               shift and go to state 8
+    NUMERO_JUGADA                  shift and go to state 9
+
+state 8
+
+    (6) JUGADAS -> MOVIMIENTO_FINAL .
+
+    $end            reduce using rule 6 (JUGADAS -> MOVIMIENTO_FINAL .)
+
+
+state 9
+
+    (10) JUGADA -> NUMERO_JUGADA . punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (11) JUGADA -> NUMERO_JUGADA . punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (12) JUGADA -> NUMERO_JUGADA . punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (13) JUGADA -> NUMERO_JUGADA . punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (14) JUGADA -> NUMERO_JUGADA . punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (15) JUGADA -> NUMERO_JUGADA . punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (16) JUGADA -> NUMERO_JUGADA . punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (17) JUGADA -> NUMERO_JUGADA . punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+
+    punto           shift and go to state 17
+
+
+state 10
+
+    (7) MOVIMIENTO_FINAL -> gano_blanco .
+
+    $end            reduce using rule 7 (MOVIMIENTO_FINAL -> gano_blanco .)
+
+
+state 11
+
+    (8) MOVIMIENTO_FINAL -> gano_negro .
+
+    $end            reduce using rule 8 (MOVIMIENTO_FINAL -> gano_negro .)
+
+
+state 12
+
+    (9) MOVIMIENTO_FINAL -> empate .
+
+    $end            reduce using rule 9 (MOVIMIENTO_FINAL -> empate .)
+
+
+state 13
+
+    (18) NUMERO_JUGADA -> numero .
+
+    punto           reduce using rule 18 (NUMERO_JUGADA -> numero .)
+    enroque_1       reduce using rule 18 (NUMERO_JUGADA -> numero .)
+    enroque_2       reduce using rule 18 (NUMERO_JUGADA -> numero .)
+    pieza           reduce using rule 18 (NUMERO_JUGADA -> numero .)
+    equis           reduce using rule 18 (NUMERO_JUGADA -> numero .)
+    columna         reduce using rule 18 (NUMERO_JUGADA -> numero .)
+    fila            reduce using rule 18 (NUMERO_JUGADA -> numero .)
+
+
+state 14
+
+    (2) METADATA -> ITEM_METADATA METADATA .
+
+    gano_blanco     reduce using rule 2 (METADATA -> ITEM_METADATA METADATA .)
+    gano_negro      reduce using rule 2 (METADATA -> ITEM_METADATA METADATA .)
+    empate          reduce using rule 2 (METADATA -> ITEM_METADATA METADATA .)
+    numero          reduce using rule 2 (METADATA -> ITEM_METADATA METADATA .)
+
+
+state 15
+
+    (4) ITEM_METADATA -> corchete_abre palabra . comilla palabra comilla corchete_cierra
+
+    comilla         shift and go to state 18
+
+
+state 16
+
+    (5) JUGADAS -> JUGADA JUGADAS .
+
+    $end            reduce using rule 5 (JUGADAS -> JUGADA JUGADAS .)
+
+
+state 17
+
+    (10) JUGADA -> NUMERO_JUGADA punto . COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (11) JUGADA -> NUMERO_JUGADA punto . COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (12) JUGADA -> NUMERO_JUGADA punto . COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (13) JUGADA -> NUMERO_JUGADA punto . COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (14) JUGADA -> NUMERO_JUGADA punto . MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (15) JUGADA -> NUMERO_JUGADA punto . MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (16) JUGADA -> NUMERO_JUGADA punto . MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (17) JUGADA -> NUMERO_JUGADA punto . MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+    (22) MOVIMIENTO -> . PIEZA POS_OPCIONAL X POS ESPECIAL
+    (23) MOVIMIENTO -> . PIEZA POS_OPCIONAL POS ESPECIAL
+    (24) MOVIMIENTO -> . PIEZA X POS ESPECIAL
+    (25) MOVIMIENTO -> . PIEZA POS ESPECIAL
+    (26) MOVIMIENTO -> . enroque_1 ESPECIAL
+    (27) MOVIMIENTO -> . enroque_2 ESPECIAL
+    (36) PIEZA -> . pieza
+    (37) PIEZA -> . lambda
+    (57) lambda -> .
+
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+    enroque_1       shift and go to state 24
+    enroque_2       shift and go to state 25
+    pieza           shift and go to state 26
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    COMENTARIO                     shift and go to state 19
+    MOVIMIENTO                     shift and go to state 20
+    PIEZA                          shift and go to state 23
+    lambda                         shift and go to state 27
+
+state 18
+
+    (4) ITEM_METADATA -> corchete_abre palabra comilla . palabra comilla corchete_cierra
+
+    palabra         shift and go to state 28
+
+
+state 19
+
+    (10) JUGADA -> NUMERO_JUGADA punto COMENTARIO . MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (11) JUGADA -> NUMERO_JUGADA punto COMENTARIO . MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (12) JUGADA -> NUMERO_JUGADA punto COMENTARIO . MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (13) JUGADA -> NUMERO_JUGADA punto COMENTARIO . MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (22) MOVIMIENTO -> . PIEZA POS_OPCIONAL X POS ESPECIAL
+    (23) MOVIMIENTO -> . PIEZA POS_OPCIONAL POS ESPECIAL
+    (24) MOVIMIENTO -> . PIEZA X POS ESPECIAL
+    (25) MOVIMIENTO -> . PIEZA POS ESPECIAL
+    (26) MOVIMIENTO -> . enroque_1 ESPECIAL
+    (27) MOVIMIENTO -> . enroque_2 ESPECIAL
+    (36) PIEZA -> . pieza
+    (37) PIEZA -> . lambda
+    (57) lambda -> .
+
+    enroque_1       shift and go to state 24
+    enroque_2       shift and go to state 25
+    pieza           shift and go to state 26
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    MOVIMIENTO                     shift and go to state 29
+    PIEZA                          shift and go to state 23
+    lambda                         shift and go to state 27
+
+state 20
+
+    (14) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO . COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (15) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO . COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (16) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO . NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (17) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO . NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+    (19) NUMERO_JUGADA_OPCIONAL -> . NUMERO_JUGADA punto punto punto COMENTARIO
+    (20) NUMERO_JUGADA_OPCIONAL -> . NUMERO_JUGADA punto punto punto
+    (21) NUMERO_JUGADA_OPCIONAL -> . lambda
+    (18) NUMERO_JUGADA -> . numero
+    (57) lambda -> .
+
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+    numero          shift and go to state 13
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    NUMERO_JUGADA                  shift and go to state 30
+    COMENTARIO                     shift and go to state 31
+    NUMERO_JUGADA_OPCIONAL         shift and go to state 32
+    lambda                         shift and go to state 33
+
+state 21
+
+    (40) COMENTARIO -> llave_abre . COM llave_cierra
+    (42) COMENTARIO -> llave_abre . llave_cierra
+    (44) COM -> . COMENTARIO_REAL COM
+    (45) COM -> . MOVIMIENTO_OPCIONAL COM
+    (46) COM -> . COMENTARIO COM
+    (47) COM -> . COMENTARIO_REAL
+    (48) COM -> . MOVIMIENTO_OPCIONAL
+    (49) COM -> . COMENTARIO
+    (50) COMENTARIO_REAL -> . palabra COMENTARIO_REAL
+    (51) COMENTARIO_REAL -> . palabra
+    (52) MOVIMIENTO_OPCIONAL -> . NUMERO_OPCIONAL MOVIMIENTO
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+    (53) NUMERO_OPCIONAL -> . NUMERO_JUGADA PUNTOS_OPCIONALES
+    (18) NUMERO_JUGADA -> . numero
+
+    llave_cierra    shift and go to state 35
+    palabra         shift and go to state 39
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+    numero          shift and go to state 13
+
+    COM                            shift and go to state 34
+    COMENTARIO_REAL                shift and go to state 36
+    MOVIMIENTO_OPCIONAL            shift and go to state 37
+    COMENTARIO                     shift and go to state 38
+    NUMERO_OPCIONAL                shift and go to state 40
+    NUMERO_JUGADA                  shift and go to state 41
+
+state 22
+
+    (41) COMENTARIO -> parentecis_abre . COM parentecis_cierra
+    (43) COMENTARIO -> parentecis_abre . parentecis_cierra
+    (44) COM -> . COMENTARIO_REAL COM
+    (45) COM -> . MOVIMIENTO_OPCIONAL COM
+    (46) COM -> . COMENTARIO COM
+    (47) COM -> . COMENTARIO_REAL
+    (48) COM -> . MOVIMIENTO_OPCIONAL
+    (49) COM -> . COMENTARIO
+    (50) COMENTARIO_REAL -> . palabra COMENTARIO_REAL
+    (51) COMENTARIO_REAL -> . palabra
+    (52) MOVIMIENTO_OPCIONAL -> . NUMERO_OPCIONAL MOVIMIENTO
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+    (53) NUMERO_OPCIONAL -> . NUMERO_JUGADA PUNTOS_OPCIONALES
+    (18) NUMERO_JUGADA -> . numero
+
+    parentecis_cierra shift and go to state 43
+    palabra         shift and go to state 39
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+    numero          shift and go to state 13
+
+    COM                            shift and go to state 42
+    COMENTARIO_REAL                shift and go to state 36
+    MOVIMIENTO_OPCIONAL            shift and go to state 37
+    COMENTARIO                     shift and go to state 38
+    NUMERO_OPCIONAL                shift and go to state 40
+    NUMERO_JUGADA                  shift and go to state 41
+
+state 23
+
+    (22) MOVIMIENTO -> PIEZA . POS_OPCIONAL X POS ESPECIAL
+    (23) MOVIMIENTO -> PIEZA . POS_OPCIONAL POS ESPECIAL
+    (24) MOVIMIENTO -> PIEZA . X POS ESPECIAL
+    (25) MOVIMIENTO -> PIEZA . POS ESPECIAL
+    (29) POS_OPCIONAL -> . COLUMNA FILA
+    (30) POS_OPCIONAL -> . COLUMNA
+    (31) POS_OPCIONAL -> . FILA
+    (28) X -> . equis
+    (32) POS -> . COLUMNA FILA
+    (38) COLUMNA -> . columna
+    (39) FILA -> . fila
+
+    equis           shift and go to state 49
+    columna         shift and go to state 50
+    fila            shift and go to state 51
+
+    POS_OPCIONAL                   shift and go to state 44
+    X                              shift and go to state 45
+    POS                            shift and go to state 46
+    COLUMNA                        shift and go to state 47
+    FILA                           shift and go to state 48
+
+state 24
+
+    (26) MOVIMIENTO -> enroque_1 . ESPECIAL
+    (33) ESPECIAL -> . jaque_mate
+    (34) ESPECIAL -> . jaque
+    (35) ESPECIAL -> . lambda
+    (57) lambda -> .
+
+    jaque_mate      shift and go to state 53
+    jaque           shift and go to state 54
+    llave_abre      reduce using rule 57 (lambda -> .)
+    parentecis_abre reduce using rule 57 (lambda -> .)
+    numero          reduce using rule 57 (lambda -> .)
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+    gano_blanco     reduce using rule 57 (lambda -> .)
+    gano_negro      reduce using rule 57 (lambda -> .)
+    empate          reduce using rule 57 (lambda -> .)
+    palabra         reduce using rule 57 (lambda -> .)
+    llave_cierra    reduce using rule 57 (lambda -> .)
+    parentecis_cierra reduce using rule 57 (lambda -> .)
+
+    ESPECIAL                       shift and go to state 52
+    lambda                         shift and go to state 55
+
+state 25
+
+    (27) MOVIMIENTO -> enroque_2 . ESPECIAL
+    (33) ESPECIAL -> . jaque_mate
+    (34) ESPECIAL -> . jaque
+    (35) ESPECIAL -> . lambda
+    (57) lambda -> .
+
+    jaque_mate      shift and go to state 53
+    jaque           shift and go to state 54
+    llave_abre      reduce using rule 57 (lambda -> .)
+    parentecis_abre reduce using rule 57 (lambda -> .)
+    numero          reduce using rule 57 (lambda -> .)
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+    gano_blanco     reduce using rule 57 (lambda -> .)
+    gano_negro      reduce using rule 57 (lambda -> .)
+    empate          reduce using rule 57 (lambda -> .)
+    palabra         reduce using rule 57 (lambda -> .)
+    llave_cierra    reduce using rule 57 (lambda -> .)
+    parentecis_cierra reduce using rule 57 (lambda -> .)
+
+    ESPECIAL                       shift and go to state 56
+    lambda                         shift and go to state 55
+
+state 26
+
+    (36) PIEZA -> pieza .
+
+    equis           reduce using rule 36 (PIEZA -> pieza .)
+    columna         reduce using rule 36 (PIEZA -> pieza .)
+    fila            reduce using rule 36 (PIEZA -> pieza .)
+
+
+state 27
+
+    (37) PIEZA -> lambda .
+
+    equis           reduce using rule 37 (PIEZA -> lambda .)
+    columna         reduce using rule 37 (PIEZA -> lambda .)
+    fila            reduce using rule 37 (PIEZA -> lambda .)
+
+
+state 28
+
+    (4) ITEM_METADATA -> corchete_abre palabra comilla palabra . comilla corchete_cierra
+
+    comilla         shift and go to state 57
+
+
+state 29
+
+    (10) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO . COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (11) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO . COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (12) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO . NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (13) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO . NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+    (19) NUMERO_JUGADA_OPCIONAL -> . NUMERO_JUGADA punto punto punto COMENTARIO
+    (20) NUMERO_JUGADA_OPCIONAL -> . NUMERO_JUGADA punto punto punto
+    (21) NUMERO_JUGADA_OPCIONAL -> . lambda
+    (18) NUMERO_JUGADA -> . numero
+    (57) lambda -> .
+
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+    numero          shift and go to state 13
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    NUMERO_JUGADA                  shift and go to state 30
+    COMENTARIO                     shift and go to state 58
+    NUMERO_JUGADA_OPCIONAL         shift and go to state 59
+    lambda                         shift and go to state 33
+
+state 30
+
+    (19) NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA . punto punto punto COMENTARIO
+    (20) NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA . punto punto punto
+
+    punto           shift and go to state 60
+
+
+state 31
+
+    (14) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO . NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (15) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO . NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (19) NUMERO_JUGADA_OPCIONAL -> . NUMERO_JUGADA punto punto punto COMENTARIO
+    (20) NUMERO_JUGADA_OPCIONAL -> . NUMERO_JUGADA punto punto punto
+    (21) NUMERO_JUGADA_OPCIONAL -> . lambda
+    (18) NUMERO_JUGADA -> . numero
+    (57) lambda -> .
+
+    numero          shift and go to state 13
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    NUMERO_JUGADA                  shift and go to state 30
+    NUMERO_JUGADA_OPCIONAL         shift and go to state 61
+    lambda                         shift and go to state 33
+
+state 32
+
+    (16) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL . MOVIMIENTO COMENTARIO
+    (17) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL . MOVIMIENTO
+    (22) MOVIMIENTO -> . PIEZA POS_OPCIONAL X POS ESPECIAL
+    (23) MOVIMIENTO -> . PIEZA POS_OPCIONAL POS ESPECIAL
+    (24) MOVIMIENTO -> . PIEZA X POS ESPECIAL
+    (25) MOVIMIENTO -> . PIEZA POS ESPECIAL
+    (26) MOVIMIENTO -> . enroque_1 ESPECIAL
+    (27) MOVIMIENTO -> . enroque_2 ESPECIAL
+    (36) PIEZA -> . pieza
+    (37) PIEZA -> . lambda
+    (57) lambda -> .
+
+    enroque_1       shift and go to state 24
+    enroque_2       shift and go to state 25
+    pieza           shift and go to state 26
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    MOVIMIENTO                     shift and go to state 62
+    PIEZA                          shift and go to state 23
+    lambda                         shift and go to state 27
+
+state 33
+
+    (21) NUMERO_JUGADA_OPCIONAL -> lambda .
+
+    enroque_1       reduce using rule 21 (NUMERO_JUGADA_OPCIONAL -> lambda .)
+    enroque_2       reduce using rule 21 (NUMERO_JUGADA_OPCIONAL -> lambda .)
+    pieza           reduce using rule 21 (NUMERO_JUGADA_OPCIONAL -> lambda .)
+    equis           reduce using rule 21 (NUMERO_JUGADA_OPCIONAL -> lambda .)
+    columna         reduce using rule 21 (NUMERO_JUGADA_OPCIONAL -> lambda .)
+    fila            reduce using rule 21 (NUMERO_JUGADA_OPCIONAL -> lambda .)
+
+
+state 34
+
+    (40) COMENTARIO -> llave_abre COM . llave_cierra
+
+    llave_cierra    shift and go to state 63
+
+
+state 35
+
+    (42) COMENTARIO -> llave_abre llave_cierra .
+
+    enroque_1       reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    enroque_2       reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    pieza           reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    equis           reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    columna         reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    fila            reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    numero          reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    palabra         reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    llave_abre      reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    parentecis_abre reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    llave_cierra    reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    parentecis_cierra reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    gano_blanco     reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    gano_negro      reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+    empate          reduce using rule 42 (COMENTARIO -> llave_abre llave_cierra .)
+
+
+state 36
+
+    (44) COM -> COMENTARIO_REAL . COM
+    (47) COM -> COMENTARIO_REAL .
+    (44) COM -> . COMENTARIO_REAL COM
+    (45) COM -> . MOVIMIENTO_OPCIONAL COM
+    (46) COM -> . COMENTARIO COM
+    (47) COM -> . COMENTARIO_REAL
+    (48) COM -> . MOVIMIENTO_OPCIONAL
+    (49) COM -> . COMENTARIO
+    (50) COMENTARIO_REAL -> . palabra COMENTARIO_REAL
+    (51) COMENTARIO_REAL -> . palabra
+    (52) MOVIMIENTO_OPCIONAL -> . NUMERO_OPCIONAL MOVIMIENTO
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+    (53) NUMERO_OPCIONAL -> . NUMERO_JUGADA PUNTOS_OPCIONALES
+    (18) NUMERO_JUGADA -> . numero
+
+    llave_cierra    reduce using rule 47 (COM -> COMENTARIO_REAL .)
+    parentecis_cierra reduce using rule 47 (COM -> COMENTARIO_REAL .)
+    palabra         shift and go to state 39
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+    numero          shift and go to state 13
+
+    COMENTARIO_REAL                shift and go to state 36
+    COM                            shift and go to state 64
+    MOVIMIENTO_OPCIONAL            shift and go to state 37
+    COMENTARIO                     shift and go to state 38
+    NUMERO_OPCIONAL                shift and go to state 40
+    NUMERO_JUGADA                  shift and go to state 41
+
+state 37
+
+    (45) COM -> MOVIMIENTO_OPCIONAL . COM
+    (48) COM -> MOVIMIENTO_OPCIONAL .
+    (44) COM -> . COMENTARIO_REAL COM
+    (45) COM -> . MOVIMIENTO_OPCIONAL COM
+    (46) COM -> . COMENTARIO COM
+    (47) COM -> . COMENTARIO_REAL
+    (48) COM -> . MOVIMIENTO_OPCIONAL
+    (49) COM -> . COMENTARIO
+    (50) COMENTARIO_REAL -> . palabra COMENTARIO_REAL
+    (51) COMENTARIO_REAL -> . palabra
+    (52) MOVIMIENTO_OPCIONAL -> . NUMERO_OPCIONAL MOVIMIENTO
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+    (53) NUMERO_OPCIONAL -> . NUMERO_JUGADA PUNTOS_OPCIONALES
+    (18) NUMERO_JUGADA -> . numero
+
+    llave_cierra    reduce using rule 48 (COM -> MOVIMIENTO_OPCIONAL .)
+    parentecis_cierra reduce using rule 48 (COM -> MOVIMIENTO_OPCIONAL .)
+    palabra         shift and go to state 39
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+    numero          shift and go to state 13
+
+    MOVIMIENTO_OPCIONAL            shift and go to state 37
+    COM                            shift and go to state 65
+    COMENTARIO_REAL                shift and go to state 36
+    COMENTARIO                     shift and go to state 38
+    NUMERO_OPCIONAL                shift and go to state 40
+    NUMERO_JUGADA                  shift and go to state 41
+
+state 38
+
+    (46) COM -> COMENTARIO . COM
+    (49) COM -> COMENTARIO .
+    (44) COM -> . COMENTARIO_REAL COM
+    (45) COM -> . MOVIMIENTO_OPCIONAL COM
+    (46) COM -> . COMENTARIO COM
+    (47) COM -> . COMENTARIO_REAL
+    (48) COM -> . MOVIMIENTO_OPCIONAL
+    (49) COM -> . COMENTARIO
+    (50) COMENTARIO_REAL -> . palabra COMENTARIO_REAL
+    (51) COMENTARIO_REAL -> . palabra
+    (52) MOVIMIENTO_OPCIONAL -> . NUMERO_OPCIONAL MOVIMIENTO
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+    (53) NUMERO_OPCIONAL -> . NUMERO_JUGADA PUNTOS_OPCIONALES
+    (18) NUMERO_JUGADA -> . numero
+
+    llave_cierra    reduce using rule 49 (COM -> COMENTARIO .)
+    parentecis_cierra reduce using rule 49 (COM -> COMENTARIO .)
+    palabra         shift and go to state 39
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+    numero          shift and go to state 13
+
+    COMENTARIO                     shift and go to state 38
+    COM                            shift and go to state 66
+    COMENTARIO_REAL                shift and go to state 36
+    MOVIMIENTO_OPCIONAL            shift and go to state 37
+    NUMERO_OPCIONAL                shift and go to state 40
+    NUMERO_JUGADA                  shift and go to state 41
+
+state 39
+
+    (50) COMENTARIO_REAL -> palabra . COMENTARIO_REAL
+    (51) COMENTARIO_REAL -> palabra .
+    (50) COMENTARIO_REAL -> . palabra COMENTARIO_REAL
+    (51) COMENTARIO_REAL -> . palabra
+
+  ! shift/reduce conflict for palabra resolved as shift
+    llave_abre      reduce using rule 51 (COMENTARIO_REAL -> palabra .)
+    parentecis_abre reduce using rule 51 (COMENTARIO_REAL -> palabra .)
+    numero          reduce using rule 51 (COMENTARIO_REAL -> palabra .)
+    llave_cierra    reduce using rule 51 (COMENTARIO_REAL -> palabra .)
+    parentecis_cierra reduce using rule 51 (COMENTARIO_REAL -> palabra .)
+    palabra         shift and go to state 39
+
+  ! palabra         [ reduce using rule 51 (COMENTARIO_REAL -> palabra .) ]
+
+    COMENTARIO_REAL                shift and go to state 67
+
+state 40
+
+    (52) MOVIMIENTO_OPCIONAL -> NUMERO_OPCIONAL . MOVIMIENTO
+    (22) MOVIMIENTO -> . PIEZA POS_OPCIONAL X POS ESPECIAL
+    (23) MOVIMIENTO -> . PIEZA POS_OPCIONAL POS ESPECIAL
+    (24) MOVIMIENTO -> . PIEZA X POS ESPECIAL
+    (25) MOVIMIENTO -> . PIEZA POS ESPECIAL
+    (26) MOVIMIENTO -> . enroque_1 ESPECIAL
+    (27) MOVIMIENTO -> . enroque_2 ESPECIAL
+    (36) PIEZA -> . pieza
+    (37) PIEZA -> . lambda
+    (57) lambda -> .
+
+    enroque_1       shift and go to state 24
+    enroque_2       shift and go to state 25
+    pieza           shift and go to state 26
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    MOVIMIENTO                     shift and go to state 68
+    PIEZA                          shift and go to state 23
+    lambda                         shift and go to state 27
+
+state 41
+
+    (53) NUMERO_OPCIONAL -> NUMERO_JUGADA . PUNTOS_OPCIONALES
+    (54) PUNTOS_OPCIONALES -> . punto
+    (55) PUNTOS_OPCIONALES -> . punto punto punto
+    (56) PUNTOS_OPCIONALES -> . lambda
+    (57) lambda -> .
+
+    punto           shift and go to state 70
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    PUNTOS_OPCIONALES              shift and go to state 69
+    lambda                         shift and go to state 71
+
+state 42
+
+    (41) COMENTARIO -> parentecis_abre COM . parentecis_cierra
+
+    parentecis_cierra shift and go to state 72
+
+
+state 43
+
+    (43) COMENTARIO -> parentecis_abre parentecis_cierra .
+
+    enroque_1       reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    enroque_2       reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    pieza           reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    equis           reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    columna         reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    fila            reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    numero          reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    palabra         reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    llave_abre      reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    parentecis_abre reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    llave_cierra    reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    parentecis_cierra reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    gano_blanco     reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    gano_negro      reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+    empate          reduce using rule 43 (COMENTARIO -> parentecis_abre parentecis_cierra .)
+
+
+state 44
+
+    (22) MOVIMIENTO -> PIEZA POS_OPCIONAL . X POS ESPECIAL
+    (23) MOVIMIENTO -> PIEZA POS_OPCIONAL . POS ESPECIAL
+    (28) X -> . equis
+    (32) POS -> . COLUMNA FILA
+    (38) COLUMNA -> . columna
+
+    equis           shift and go to state 49
+    columna         shift and go to state 50
+
+    X                              shift and go to state 73
+    POS                            shift and go to state 74
+    COLUMNA                        shift and go to state 75
+
+state 45
+
+    (24) MOVIMIENTO -> PIEZA X . POS ESPECIAL
+    (32) POS -> . COLUMNA FILA
+    (38) COLUMNA -> . columna
+
+    columna         shift and go to state 50
+
+    POS                            shift and go to state 76
+    COLUMNA                        shift and go to state 75
+
+state 46
+
+    (25) MOVIMIENTO -> PIEZA POS . ESPECIAL
+    (33) ESPECIAL -> . jaque_mate
+    (34) ESPECIAL -> . jaque
+    (35) ESPECIAL -> . lambda
+    (57) lambda -> .
+
+    jaque_mate      shift and go to state 53
+    jaque           shift and go to state 54
+    llave_abre      reduce using rule 57 (lambda -> .)
+    parentecis_abre reduce using rule 57 (lambda -> .)
+    numero          reduce using rule 57 (lambda -> .)
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+    gano_blanco     reduce using rule 57 (lambda -> .)
+    gano_negro      reduce using rule 57 (lambda -> .)
+    empate          reduce using rule 57 (lambda -> .)
+    palabra         reduce using rule 57 (lambda -> .)
+    llave_cierra    reduce using rule 57 (lambda -> .)
+    parentecis_cierra reduce using rule 57 (lambda -> .)
+
+    ESPECIAL                       shift and go to state 77
+    lambda                         shift and go to state 55
+
+state 47
+
+    (29) POS_OPCIONAL -> COLUMNA . FILA
+    (30) POS_OPCIONAL -> COLUMNA .
+    (32) POS -> COLUMNA . FILA
+    (39) FILA -> . fila
+
+    equis           reduce using rule 30 (POS_OPCIONAL -> COLUMNA .)
+    columna         reduce using rule 30 (POS_OPCIONAL -> COLUMNA .)
+    fila            shift and go to state 51
+
+    FILA                           shift and go to state 78
+
+state 48
+
+    (31) POS_OPCIONAL -> FILA .
+
+    equis           reduce using rule 31 (POS_OPCIONAL -> FILA .)
+    columna         reduce using rule 31 (POS_OPCIONAL -> FILA .)
+
+
+state 49
+
+    (28) X -> equis .
+
+    columna         reduce using rule 28 (X -> equis .)
+
+
+state 50
+
+    (38) COLUMNA -> columna .
+
+    fila            reduce using rule 38 (COLUMNA -> columna .)
+    equis           reduce using rule 38 (COLUMNA -> columna .)
+    columna         reduce using rule 38 (COLUMNA -> columna .)
+
+
+state 51
+
+    (39) FILA -> fila .
+
+    equis           reduce using rule 39 (FILA -> fila .)
+    columna         reduce using rule 39 (FILA -> fila .)
+    jaque_mate      reduce using rule 39 (FILA -> fila .)
+    jaque           reduce using rule 39 (FILA -> fila .)
+    llave_abre      reduce using rule 39 (FILA -> fila .)
+    parentecis_abre reduce using rule 39 (FILA -> fila .)
+    numero          reduce using rule 39 (FILA -> fila .)
+    enroque_1       reduce using rule 39 (FILA -> fila .)
+    enroque_2       reduce using rule 39 (FILA -> fila .)
+    pieza           reduce using rule 39 (FILA -> fila .)
+    fila            reduce using rule 39 (FILA -> fila .)
+    gano_blanco     reduce using rule 39 (FILA -> fila .)
+    gano_negro      reduce using rule 39 (FILA -> fila .)
+    empate          reduce using rule 39 (FILA -> fila .)
+    palabra         reduce using rule 39 (FILA -> fila .)
+    llave_cierra    reduce using rule 39 (FILA -> fila .)
+    parentecis_cierra reduce using rule 39 (FILA -> fila .)
+
+
+state 52
+
+    (26) MOVIMIENTO -> enroque_1 ESPECIAL .
+
+    llave_abre      reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    parentecis_abre reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    numero          reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    enroque_1       reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    enroque_2       reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    pieza           reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    equis           reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    columna         reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    fila            reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    gano_blanco     reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    gano_negro      reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    empate          reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    palabra         reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    llave_cierra    reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+    parentecis_cierra reduce using rule 26 (MOVIMIENTO -> enroque_1 ESPECIAL .)
+
+
+state 53
+
+    (33) ESPECIAL -> jaque_mate .
+
+    llave_abre      reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    parentecis_abre reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    numero          reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    enroque_1       reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    enroque_2       reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    pieza           reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    equis           reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    columna         reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    fila            reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    gano_blanco     reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    gano_negro      reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    empate          reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    palabra         reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    llave_cierra    reduce using rule 33 (ESPECIAL -> jaque_mate .)
+    parentecis_cierra reduce using rule 33 (ESPECIAL -> jaque_mate .)
+
+
+state 54
+
+    (34) ESPECIAL -> jaque .
+
+    llave_abre      reduce using rule 34 (ESPECIAL -> jaque .)
+    parentecis_abre reduce using rule 34 (ESPECIAL -> jaque .)
+    numero          reduce using rule 34 (ESPECIAL -> jaque .)
+    enroque_1       reduce using rule 34 (ESPECIAL -> jaque .)
+    enroque_2       reduce using rule 34 (ESPECIAL -> jaque .)
+    pieza           reduce using rule 34 (ESPECIAL -> jaque .)
+    equis           reduce using rule 34 (ESPECIAL -> jaque .)
+    columna         reduce using rule 34 (ESPECIAL -> jaque .)
+    fila            reduce using rule 34 (ESPECIAL -> jaque .)
+    gano_blanco     reduce using rule 34 (ESPECIAL -> jaque .)
+    gano_negro      reduce using rule 34 (ESPECIAL -> jaque .)
+    empate          reduce using rule 34 (ESPECIAL -> jaque .)
+    palabra         reduce using rule 34 (ESPECIAL -> jaque .)
+    llave_cierra    reduce using rule 34 (ESPECIAL -> jaque .)
+    parentecis_cierra reduce using rule 34 (ESPECIAL -> jaque .)
+
+
+state 55
+
+    (35) ESPECIAL -> lambda .
+
+    llave_abre      reduce using rule 35 (ESPECIAL -> lambda .)
+    parentecis_abre reduce using rule 35 (ESPECIAL -> lambda .)
+    numero          reduce using rule 35 (ESPECIAL -> lambda .)
+    enroque_1       reduce using rule 35 (ESPECIAL -> lambda .)
+    enroque_2       reduce using rule 35 (ESPECIAL -> lambda .)
+    pieza           reduce using rule 35 (ESPECIAL -> lambda .)
+    equis           reduce using rule 35 (ESPECIAL -> lambda .)
+    columna         reduce using rule 35 (ESPECIAL -> lambda .)
+    fila            reduce using rule 35 (ESPECIAL -> lambda .)
+    gano_blanco     reduce using rule 35 (ESPECIAL -> lambda .)
+    gano_negro      reduce using rule 35 (ESPECIAL -> lambda .)
+    empate          reduce using rule 35 (ESPECIAL -> lambda .)
+    palabra         reduce using rule 35 (ESPECIAL -> lambda .)
+    llave_cierra    reduce using rule 35 (ESPECIAL -> lambda .)
+    parentecis_cierra reduce using rule 35 (ESPECIAL -> lambda .)
+
+
+state 56
+
+    (27) MOVIMIENTO -> enroque_2 ESPECIAL .
+
+    llave_abre      reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    parentecis_abre reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    numero          reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    enroque_1       reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    enroque_2       reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    pieza           reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    equis           reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    columna         reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    fila            reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    gano_blanco     reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    gano_negro      reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    empate          reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    palabra         reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    llave_cierra    reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+    parentecis_cierra reduce using rule 27 (MOVIMIENTO -> enroque_2 ESPECIAL .)
+
+
+state 57
+
+    (4) ITEM_METADATA -> corchete_abre palabra comilla palabra comilla . corchete_cierra
+
+    corchete_cierra shift and go to state 79
+
+
+state 58
+
+    (10) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO . NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+    (11) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO . NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+    (19) NUMERO_JUGADA_OPCIONAL -> . NUMERO_JUGADA punto punto punto COMENTARIO
+    (20) NUMERO_JUGADA_OPCIONAL -> . NUMERO_JUGADA punto punto punto
+    (21) NUMERO_JUGADA_OPCIONAL -> . lambda
+    (18) NUMERO_JUGADA -> . numero
+    (57) lambda -> .
+
+    numero          shift and go to state 13
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    NUMERO_JUGADA                  shift and go to state 30
+    NUMERO_JUGADA_OPCIONAL         shift and go to state 80
+    lambda                         shift and go to state 33
+
+state 59
+
+    (12) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL . MOVIMIENTO COMENTARIO
+    (13) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL . MOVIMIENTO
+    (22) MOVIMIENTO -> . PIEZA POS_OPCIONAL X POS ESPECIAL
+    (23) MOVIMIENTO -> . PIEZA POS_OPCIONAL POS ESPECIAL
+    (24) MOVIMIENTO -> . PIEZA X POS ESPECIAL
+    (25) MOVIMIENTO -> . PIEZA POS ESPECIAL
+    (26) MOVIMIENTO -> . enroque_1 ESPECIAL
+    (27) MOVIMIENTO -> . enroque_2 ESPECIAL
+    (36) PIEZA -> . pieza
+    (37) PIEZA -> . lambda
+    (57) lambda -> .
+
+    enroque_1       shift and go to state 24
+    enroque_2       shift and go to state 25
+    pieza           shift and go to state 26
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    MOVIMIENTO                     shift and go to state 81
+    PIEZA                          shift and go to state 23
+    lambda                         shift and go to state 27
+
+state 60
+
+    (19) NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto . punto punto COMENTARIO
+    (20) NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto . punto punto
+
+    punto           shift and go to state 82
+
+
+state 61
+
+    (14) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL . MOVIMIENTO COMENTARIO
+    (15) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL . MOVIMIENTO
+    (22) MOVIMIENTO -> . PIEZA POS_OPCIONAL X POS ESPECIAL
+    (23) MOVIMIENTO -> . PIEZA POS_OPCIONAL POS ESPECIAL
+    (24) MOVIMIENTO -> . PIEZA X POS ESPECIAL
+    (25) MOVIMIENTO -> . PIEZA POS ESPECIAL
+    (26) MOVIMIENTO -> . enroque_1 ESPECIAL
+    (27) MOVIMIENTO -> . enroque_2 ESPECIAL
+    (36) PIEZA -> . pieza
+    (37) PIEZA -> . lambda
+    (57) lambda -> .
+
+    enroque_1       shift and go to state 24
+    enroque_2       shift and go to state 25
+    pieza           shift and go to state 26
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    MOVIMIENTO                     shift and go to state 83
+    PIEZA                          shift and go to state 23
+    lambda                         shift and go to state 27
+
+state 62
+
+    (16) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO . COMENTARIO
+    (17) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+
+    gano_blanco     reduce using rule 17 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    gano_negro      reduce using rule 17 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    empate          reduce using rule 17 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    numero          reduce using rule 17 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+
+    COMENTARIO                     shift and go to state 84
+
+state 63
+
+    (40) COMENTARIO -> llave_abre COM llave_cierra .
+
+    enroque_1       reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    enroque_2       reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    pieza           reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    equis           reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    columna         reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    fila            reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    numero          reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    palabra         reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    llave_abre      reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    parentecis_abre reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    llave_cierra    reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    parentecis_cierra reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    gano_blanco     reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    gano_negro      reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+    empate          reduce using rule 40 (COMENTARIO -> llave_abre COM llave_cierra .)
+
+
+state 64
+
+    (44) COM -> COMENTARIO_REAL COM .
+
+    llave_cierra    reduce using rule 44 (COM -> COMENTARIO_REAL COM .)
+    parentecis_cierra reduce using rule 44 (COM -> COMENTARIO_REAL COM .)
+
+
+state 65
+
+    (45) COM -> MOVIMIENTO_OPCIONAL COM .
+
+    llave_cierra    reduce using rule 45 (COM -> MOVIMIENTO_OPCIONAL COM .)
+    parentecis_cierra reduce using rule 45 (COM -> MOVIMIENTO_OPCIONAL COM .)
+
+
+state 66
+
+    (46) COM -> COMENTARIO COM .
+
+    llave_cierra    reduce using rule 46 (COM -> COMENTARIO COM .)
+    parentecis_cierra reduce using rule 46 (COM -> COMENTARIO COM .)
+
+
+state 67
+
+    (50) COMENTARIO_REAL -> palabra COMENTARIO_REAL .
+
+    palabra         reduce using rule 50 (COMENTARIO_REAL -> palabra COMENTARIO_REAL .)
+    llave_abre      reduce using rule 50 (COMENTARIO_REAL -> palabra COMENTARIO_REAL .)
+    parentecis_abre reduce using rule 50 (COMENTARIO_REAL -> palabra COMENTARIO_REAL .)
+    numero          reduce using rule 50 (COMENTARIO_REAL -> palabra COMENTARIO_REAL .)
+    llave_cierra    reduce using rule 50 (COMENTARIO_REAL -> palabra COMENTARIO_REAL .)
+    parentecis_cierra reduce using rule 50 (COMENTARIO_REAL -> palabra COMENTARIO_REAL .)
+
+
+state 68
+
+    (52) MOVIMIENTO_OPCIONAL -> NUMERO_OPCIONAL MOVIMIENTO .
+
+    palabra         reduce using rule 52 (MOVIMIENTO_OPCIONAL -> NUMERO_OPCIONAL MOVIMIENTO .)
+    llave_abre      reduce using rule 52 (MOVIMIENTO_OPCIONAL -> NUMERO_OPCIONAL MOVIMIENTO .)
+    parentecis_abre reduce using rule 52 (MOVIMIENTO_OPCIONAL -> NUMERO_OPCIONAL MOVIMIENTO .)
+    numero          reduce using rule 52 (MOVIMIENTO_OPCIONAL -> NUMERO_OPCIONAL MOVIMIENTO .)
+    llave_cierra    reduce using rule 52 (MOVIMIENTO_OPCIONAL -> NUMERO_OPCIONAL MOVIMIENTO .)
+    parentecis_cierra reduce using rule 52 (MOVIMIENTO_OPCIONAL -> NUMERO_OPCIONAL MOVIMIENTO .)
+
+
+state 69
+
+    (53) NUMERO_OPCIONAL -> NUMERO_JUGADA PUNTOS_OPCIONALES .
+
+    enroque_1       reduce using rule 53 (NUMERO_OPCIONAL -> NUMERO_JUGADA PUNTOS_OPCIONALES .)
+    enroque_2       reduce using rule 53 (NUMERO_OPCIONAL -> NUMERO_JUGADA PUNTOS_OPCIONALES .)
+    pieza           reduce using rule 53 (NUMERO_OPCIONAL -> NUMERO_JUGADA PUNTOS_OPCIONALES .)
+    equis           reduce using rule 53 (NUMERO_OPCIONAL -> NUMERO_JUGADA PUNTOS_OPCIONALES .)
+    columna         reduce using rule 53 (NUMERO_OPCIONAL -> NUMERO_JUGADA PUNTOS_OPCIONALES .)
+    fila            reduce using rule 53 (NUMERO_OPCIONAL -> NUMERO_JUGADA PUNTOS_OPCIONALES .)
+
+
+state 70
+
+    (54) PUNTOS_OPCIONALES -> punto .
+    (55) PUNTOS_OPCIONALES -> punto . punto punto
+
+    enroque_1       reduce using rule 54 (PUNTOS_OPCIONALES -> punto .)
+    enroque_2       reduce using rule 54 (PUNTOS_OPCIONALES -> punto .)
+    pieza           reduce using rule 54 (PUNTOS_OPCIONALES -> punto .)
+    equis           reduce using rule 54 (PUNTOS_OPCIONALES -> punto .)
+    columna         reduce using rule 54 (PUNTOS_OPCIONALES -> punto .)
+    fila            reduce using rule 54 (PUNTOS_OPCIONALES -> punto .)
+    punto           shift and go to state 85
+
+
+state 71
+
+    (56) PUNTOS_OPCIONALES -> lambda .
+
+    enroque_1       reduce using rule 56 (PUNTOS_OPCIONALES -> lambda .)
+    enroque_2       reduce using rule 56 (PUNTOS_OPCIONALES -> lambda .)
+    pieza           reduce using rule 56 (PUNTOS_OPCIONALES -> lambda .)
+    equis           reduce using rule 56 (PUNTOS_OPCIONALES -> lambda .)
+    columna         reduce using rule 56 (PUNTOS_OPCIONALES -> lambda .)
+    fila            reduce using rule 56 (PUNTOS_OPCIONALES -> lambda .)
+
+
+state 72
+
+    (41) COMENTARIO -> parentecis_abre COM parentecis_cierra .
+
+    enroque_1       reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    enroque_2       reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    pieza           reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    equis           reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    columna         reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    fila            reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    numero          reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    palabra         reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    llave_abre      reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    parentecis_abre reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    llave_cierra    reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    parentecis_cierra reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    gano_blanco     reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    gano_negro      reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+    empate          reduce using rule 41 (COMENTARIO -> parentecis_abre COM parentecis_cierra .)
+
+
+state 73
+
+    (22) MOVIMIENTO -> PIEZA POS_OPCIONAL X . POS ESPECIAL
+    (32) POS -> . COLUMNA FILA
+    (38) COLUMNA -> . columna
+
+    columna         shift and go to state 50
+
+    POS                            shift and go to state 86
+    COLUMNA                        shift and go to state 75
+
+state 74
+
+    (23) MOVIMIENTO -> PIEZA POS_OPCIONAL POS . ESPECIAL
+    (33) ESPECIAL -> . jaque_mate
+    (34) ESPECIAL -> . jaque
+    (35) ESPECIAL -> . lambda
+    (57) lambda -> .
+
+    jaque_mate      shift and go to state 53
+    jaque           shift and go to state 54
+    llave_abre      reduce using rule 57 (lambda -> .)
+    parentecis_abre reduce using rule 57 (lambda -> .)
+    numero          reduce using rule 57 (lambda -> .)
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+    gano_blanco     reduce using rule 57 (lambda -> .)
+    gano_negro      reduce using rule 57 (lambda -> .)
+    empate          reduce using rule 57 (lambda -> .)
+    palabra         reduce using rule 57 (lambda -> .)
+    llave_cierra    reduce using rule 57 (lambda -> .)
+    parentecis_cierra reduce using rule 57 (lambda -> .)
+
+    ESPECIAL                       shift and go to state 87
+    lambda                         shift and go to state 55
+
+state 75
+
+    (32) POS -> COLUMNA . FILA
+    (39) FILA -> . fila
+
+    fila            shift and go to state 51
+
+    FILA                           shift and go to state 88
+
+state 76
+
+    (24) MOVIMIENTO -> PIEZA X POS . ESPECIAL
+    (33) ESPECIAL -> . jaque_mate
+    (34) ESPECIAL -> . jaque
+    (35) ESPECIAL -> . lambda
+    (57) lambda -> .
+
+    jaque_mate      shift and go to state 53
+    jaque           shift and go to state 54
+    llave_abre      reduce using rule 57 (lambda -> .)
+    parentecis_abre reduce using rule 57 (lambda -> .)
+    numero          reduce using rule 57 (lambda -> .)
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+    gano_blanco     reduce using rule 57 (lambda -> .)
+    gano_negro      reduce using rule 57 (lambda -> .)
+    empate          reduce using rule 57 (lambda -> .)
+    palabra         reduce using rule 57 (lambda -> .)
+    llave_cierra    reduce using rule 57 (lambda -> .)
+    parentecis_cierra reduce using rule 57 (lambda -> .)
+
+    ESPECIAL                       shift and go to state 89
+    lambda                         shift and go to state 55
+
+state 77
+
+    (25) MOVIMIENTO -> PIEZA POS ESPECIAL .
+
+    llave_abre      reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    parentecis_abre reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    numero          reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    enroque_1       reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    enroque_2       reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    pieza           reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    equis           reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    columna         reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    fila            reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    gano_blanco     reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    gano_negro      reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    empate          reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    palabra         reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    llave_cierra    reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+    parentecis_cierra reduce using rule 25 (MOVIMIENTO -> PIEZA POS ESPECIAL .)
+
+
+state 78
+
+    (29) POS_OPCIONAL -> COLUMNA FILA .
+    (32) POS -> COLUMNA FILA .
+
+  ! reduce/reduce conflict for equis resolved using rule 29 (POS_OPCIONAL -> COLUMNA FILA .)
+  ! reduce/reduce conflict for columna resolved using rule 29 (POS_OPCIONAL -> COLUMNA FILA .)
+    equis           reduce using rule 29 (POS_OPCIONAL -> COLUMNA FILA .)
+    columna         reduce using rule 29 (POS_OPCIONAL -> COLUMNA FILA .)
+    jaque_mate      reduce using rule 32 (POS -> COLUMNA FILA .)
+    jaque           reduce using rule 32 (POS -> COLUMNA FILA .)
+    llave_abre      reduce using rule 32 (POS -> COLUMNA FILA .)
+    parentecis_abre reduce using rule 32 (POS -> COLUMNA FILA .)
+    numero          reduce using rule 32 (POS -> COLUMNA FILA .)
+    enroque_1       reduce using rule 32 (POS -> COLUMNA FILA .)
+    enroque_2       reduce using rule 32 (POS -> COLUMNA FILA .)
+    pieza           reduce using rule 32 (POS -> COLUMNA FILA .)
+    fila            reduce using rule 32 (POS -> COLUMNA FILA .)
+    gano_blanco     reduce using rule 32 (POS -> COLUMNA FILA .)
+    gano_negro      reduce using rule 32 (POS -> COLUMNA FILA .)
+    empate          reduce using rule 32 (POS -> COLUMNA FILA .)
+    palabra         reduce using rule 32 (POS -> COLUMNA FILA .)
+    llave_cierra    reduce using rule 32 (POS -> COLUMNA FILA .)
+    parentecis_cierra reduce using rule 32 (POS -> COLUMNA FILA .)
+
+  ! equis           [ reduce using rule 32 (POS -> COLUMNA FILA .) ]
+  ! columna         [ reduce using rule 32 (POS -> COLUMNA FILA .) ]
+
+
+state 79
+
+    (4) ITEM_METADATA -> corchete_abre palabra comilla palabra comilla corchete_cierra .
+
+    corchete_abre   reduce using rule 4 (ITEM_METADATA -> corchete_abre palabra comilla palabra comilla corchete_cierra .)
+    gano_blanco     reduce using rule 4 (ITEM_METADATA -> corchete_abre palabra comilla palabra comilla corchete_cierra .)
+    gano_negro      reduce using rule 4 (ITEM_METADATA -> corchete_abre palabra comilla palabra comilla corchete_cierra .)
+    empate          reduce using rule 4 (ITEM_METADATA -> corchete_abre palabra comilla palabra comilla corchete_cierra .)
+    numero          reduce using rule 4 (ITEM_METADATA -> corchete_abre palabra comilla palabra comilla corchete_cierra .)
+
+
+state 80
+
+    (10) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL . MOVIMIENTO COMENTARIO
+    (11) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL . MOVIMIENTO
+    (22) MOVIMIENTO -> . PIEZA POS_OPCIONAL X POS ESPECIAL
+    (23) MOVIMIENTO -> . PIEZA POS_OPCIONAL POS ESPECIAL
+    (24) MOVIMIENTO -> . PIEZA X POS ESPECIAL
+    (25) MOVIMIENTO -> . PIEZA POS ESPECIAL
+    (26) MOVIMIENTO -> . enroque_1 ESPECIAL
+    (27) MOVIMIENTO -> . enroque_2 ESPECIAL
+    (36) PIEZA -> . pieza
+    (37) PIEZA -> . lambda
+    (57) lambda -> .
+
+    enroque_1       shift and go to state 24
+    enroque_2       shift and go to state 25
+    pieza           shift and go to state 26
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+
+    MOVIMIENTO                     shift and go to state 90
+    PIEZA                          shift and go to state 23
+    lambda                         shift and go to state 27
+
+state 81
+
+    (12) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO . COMENTARIO
+    (13) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+
+    gano_blanco     reduce using rule 13 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    gano_negro      reduce using rule 13 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    empate          reduce using rule 13 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    numero          reduce using rule 13 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+
+    COMENTARIO                     shift and go to state 91
+
+state 82
+
+    (19) NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto . punto COMENTARIO
+    (20) NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto . punto
+
+    punto           shift and go to state 92
+
+
+state 83
+
+    (14) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO . COMENTARIO
+    (15) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+
+    gano_blanco     reduce using rule 15 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    gano_negro      reduce using rule 15 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    empate          reduce using rule 15 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    numero          reduce using rule 15 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+
+    COMENTARIO                     shift and go to state 93
+
+state 84
+
+    (16) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .
+
+    gano_blanco     reduce using rule 16 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    gano_negro      reduce using rule 16 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    empate          reduce using rule 16 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    numero          reduce using rule 16 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+
+
+state 85
+
+    (55) PUNTOS_OPCIONALES -> punto punto . punto
+
+    punto           shift and go to state 94
+
+
+state 86
+
+    (22) MOVIMIENTO -> PIEZA POS_OPCIONAL X POS . ESPECIAL
+    (33) ESPECIAL -> . jaque_mate
+    (34) ESPECIAL -> . jaque
+    (35) ESPECIAL -> . lambda
+    (57) lambda -> .
+
+    jaque_mate      shift and go to state 53
+    jaque           shift and go to state 54
+    llave_abre      reduce using rule 57 (lambda -> .)
+    parentecis_abre reduce using rule 57 (lambda -> .)
+    numero          reduce using rule 57 (lambda -> .)
+    enroque_1       reduce using rule 57 (lambda -> .)
+    enroque_2       reduce using rule 57 (lambda -> .)
+    pieza           reduce using rule 57 (lambda -> .)
+    equis           reduce using rule 57 (lambda -> .)
+    columna         reduce using rule 57 (lambda -> .)
+    fila            reduce using rule 57 (lambda -> .)
+    gano_blanco     reduce using rule 57 (lambda -> .)
+    gano_negro      reduce using rule 57 (lambda -> .)
+    empate          reduce using rule 57 (lambda -> .)
+    palabra         reduce using rule 57 (lambda -> .)
+    llave_cierra    reduce using rule 57 (lambda -> .)
+    parentecis_cierra reduce using rule 57 (lambda -> .)
+
+    ESPECIAL                       shift and go to state 95
+    lambda                         shift and go to state 55
+
+state 87
+
+    (23) MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .
+
+    llave_abre      reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    parentecis_abre reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    numero          reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    enroque_1       reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    enroque_2       reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    pieza           reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    equis           reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    columna         reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    fila            reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    gano_blanco     reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    gano_negro      reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    empate          reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    palabra         reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    llave_cierra    reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+    parentecis_cierra reduce using rule 23 (MOVIMIENTO -> PIEZA POS_OPCIONAL POS ESPECIAL .)
+
+
+state 88
+
+    (32) POS -> COLUMNA FILA .
+
+    jaque_mate      reduce using rule 32 (POS -> COLUMNA FILA .)
+    jaque           reduce using rule 32 (POS -> COLUMNA FILA .)
+    llave_abre      reduce using rule 32 (POS -> COLUMNA FILA .)
+    parentecis_abre reduce using rule 32 (POS -> COLUMNA FILA .)
+    numero          reduce using rule 32 (POS -> COLUMNA FILA .)
+    enroque_1       reduce using rule 32 (POS -> COLUMNA FILA .)
+    enroque_2       reduce using rule 32 (POS -> COLUMNA FILA .)
+    pieza           reduce using rule 32 (POS -> COLUMNA FILA .)
+    equis           reduce using rule 32 (POS -> COLUMNA FILA .)
+    columna         reduce using rule 32 (POS -> COLUMNA FILA .)
+    fila            reduce using rule 32 (POS -> COLUMNA FILA .)
+    gano_blanco     reduce using rule 32 (POS -> COLUMNA FILA .)
+    gano_negro      reduce using rule 32 (POS -> COLUMNA FILA .)
+    empate          reduce using rule 32 (POS -> COLUMNA FILA .)
+    palabra         reduce using rule 32 (POS -> COLUMNA FILA .)
+    llave_cierra    reduce using rule 32 (POS -> COLUMNA FILA .)
+    parentecis_cierra reduce using rule 32 (POS -> COLUMNA FILA .)
+
+
+state 89
+
+    (24) MOVIMIENTO -> PIEZA X POS ESPECIAL .
+
+    llave_abre      reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    parentecis_abre reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    numero          reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    enroque_1       reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    enroque_2       reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    pieza           reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    equis           reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    columna         reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    fila            reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    gano_blanco     reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    gano_negro      reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    empate          reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    palabra         reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    llave_cierra    reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+    parentecis_cierra reduce using rule 24 (MOVIMIENTO -> PIEZA X POS ESPECIAL .)
+
+
+state 90
+
+    (10) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO . COMENTARIO
+    (11) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+
+    gano_blanco     reduce using rule 11 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    gano_negro      reduce using rule 11 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    empate          reduce using rule 11 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    numero          reduce using rule 11 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO .)
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+
+    COMENTARIO                     shift and go to state 96
+
+state 91
+
+    (12) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .
+
+    gano_blanco     reduce using rule 12 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    gano_negro      reduce using rule 12 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    empate          reduce using rule 12 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    numero          reduce using rule 12 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+
+
+state 92
+
+    (19) NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto . COMENTARIO
+    (20) NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto .
+    (40) COMENTARIO -> . llave_abre COM llave_cierra
+    (41) COMENTARIO -> . parentecis_abre COM parentecis_cierra
+    (42) COMENTARIO -> . llave_abre llave_cierra
+    (43) COMENTARIO -> . parentecis_abre parentecis_cierra
+
+    enroque_1       reduce using rule 20 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto .)
+    enroque_2       reduce using rule 20 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto .)
+    pieza           reduce using rule 20 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto .)
+    equis           reduce using rule 20 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto .)
+    columna         reduce using rule 20 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto .)
+    fila            reduce using rule 20 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto .)
+    llave_abre      shift and go to state 21
+    parentecis_abre shift and go to state 22
+
+    COMENTARIO                     shift and go to state 97
+
+state 93
+
+    (14) JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .
+
+    gano_blanco     reduce using rule 14 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    gano_negro      reduce using rule 14 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    empate          reduce using rule 14 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    numero          reduce using rule 14 (JUGADA -> NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+
+
+state 94
+
+    (55) PUNTOS_OPCIONALES -> punto punto punto .
+
+    enroque_1       reduce using rule 55 (PUNTOS_OPCIONALES -> punto punto punto .)
+    enroque_2       reduce using rule 55 (PUNTOS_OPCIONALES -> punto punto punto .)
+    pieza           reduce using rule 55 (PUNTOS_OPCIONALES -> punto punto punto .)
+    equis           reduce using rule 55 (PUNTOS_OPCIONALES -> punto punto punto .)
+    columna         reduce using rule 55 (PUNTOS_OPCIONALES -> punto punto punto .)
+    fila            reduce using rule 55 (PUNTOS_OPCIONALES -> punto punto punto .)
+
+
+state 95
+
+    (22) MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .
+
+    llave_abre      reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    parentecis_abre reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    numero          reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    enroque_1       reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    enroque_2       reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    pieza           reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    equis           reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    columna         reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    fila            reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    gano_blanco     reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    gano_negro      reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    empate          reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    palabra         reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    llave_cierra    reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+    parentecis_cierra reduce using rule 22 (MOVIMIENTO -> PIEZA POS_OPCIONAL X POS ESPECIAL .)
+
+
+state 96
+
+    (10) JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .
+
+    gano_blanco     reduce using rule 10 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    gano_negro      reduce using rule 10 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    empate          reduce using rule 10 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+    numero          reduce using rule 10 (JUGADA -> NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO .)
+
+
+state 97
+
+    (19) NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto COMENTARIO .
+
+    enroque_1       reduce using rule 19 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto COMENTARIO .)
+    enroque_2       reduce using rule 19 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto COMENTARIO .)
+    pieza           reduce using rule 19 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto COMENTARIO .)
+    equis           reduce using rule 19 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto COMENTARIO .)
+    columna         reduce using rule 19 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto COMENTARIO .)
+    fila            reduce using rule 19 (NUMERO_JUGADA_OPCIONAL -> NUMERO_JUGADA punto punto punto COMENTARIO .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for palabra in state 39 resolved as shift
+WARNING: reduce/reduce conflict in state 78 resolved using rule (POS_OPCIONAL -> COLUMNA FILA)
+WARNING: rejected rule (POS -> COLUMNA FILA) in state 78

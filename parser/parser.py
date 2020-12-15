@@ -28,7 +28,14 @@ def p_movimiento_final(p):
     pass
 
 def p_jugada(p):
-    'JUGADA :   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO'
+    '''JUGADA   :   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO 
+                |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+                |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+                |   NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
+                |   NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO'''
     pass
 
 def p_numero_jugada(p):
@@ -37,29 +44,31 @@ def p_numero_jugada(p):
 
 def p_numero_jugada_opcional(p):
     '''NUMERO_JUGADA_OPCIONAL   :   NUMERO_JUGADA punto punto punto COMENTARIO
+                                |   NUMERO_JUGADA punto punto punto
                                 |   lambda'''
     pass
 
 def p_movimiento(p):
-    '''MOVIMIENTO   :   PIEZA POS_OPCIONAL X POS ESPECIAL
+    '''MOVIMIENTO   :   PIEZA POS_OPCIONAL equis PIEZA POS ESPECIAL
+                    |   PIEZA POS_OPCIONAL PIEZA POS ESPECIAL
+                    |   PIEZA equis POS ESPECIAL
+                    |   PIEZA POS ESPECIAL
                     |   enroque_1 ESPECIAL
                     |   enroque_2 ESPECIAL'''
     pass
 
-def p_equis(p):
-    '''X    :   equis
-            |   lambda'''
-    pass
+# def p_equis(p):
+#     '''X    :   equis'''
+#     pass
 
 def p_pos_opcional(p):
-    '''POS_OPCIONAL :   COLUMNA FILA
-                    |   COLUMNA
-                    |   FILA
-                    |   lambda'''
+    '''POS_OPCIONAL :   columna fila
+                    |   columna
+                    |   fila'''
     pass
 
 def p_pos(p):
-    'POS    :   COLUMNA FILA'
+    'POS    :   columna fila'
     pass
 
 def p_especial(p):
@@ -73,33 +82,29 @@ def p_pieza(p):
                 |   lambda'''
     pass
 
-def p_columna(p):
-    'COLUMNA    :   columna'
-    pass
-
-def p_fila(p):
-    'FILA   :   fila'
-    pass
-
 def p_comentario(p):
     '''COMENTARIO   :   llave_abre COM llave_cierra
                     |   parentecis_abre COM parentecis_cierra
-                    |   lambda'''
+                    |   llave_abre llave_cierra
+                    |   parentecis_abre parentecis_cierra'''
     pass
 
 def p_com(p):
-    '''COM  :   COMENTARIO_REAL MOVIMIENTO_OPCIONAL COMENTARIO COM
-            |   lambda'''
+    '''COM  :   COMENTARIO_REAL COM 
+            |   MOVIMIENTO_OPCIONAL COM
+            |   COMENTARIO COM
+            |   COMENTARIO_REAL
+            |   MOVIMIENTO_OPCIONAL 
+            |   COMENTARIO'''
     pass
 
 def p_comentario_real(p):
-    '''COMENTARIO_REAL      :   palabra COMENTARIO_REAL
-                            |   lambda'''
+    '''COMENTARIO_REAL      :   palabra espacio COMENTARIO_REAL
+                            |   palabra'''
     pass
 
 def p_movimiento_opcional(p):
-    '''MOVIMIENTO_OPCIONAL  :   NUMERO_OPCIONAL MOVIMIENTO
-                            |   lambda'''
+    '''MOVIMIENTO_OPCIONAL  :   NUMERO_OPCIONAL MOVIMIENTO'''
     pass
 
 def p_numero_opcional(p):

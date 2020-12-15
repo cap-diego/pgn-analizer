@@ -29,6 +29,7 @@ tokens = (
 'palabra',
 'numero',
 'equis',
+'espacio',
 )
 
 # precedence = (
@@ -54,8 +55,9 @@ t_jaque_mate  = r'\#'
 t_pieza  = r'[PNBRQK]'
 t_columna  = r'[a-h]'
 t_fila  = r'[1-8]'
-t_palabra = r'[a-zA-Z]+'
+t_palabra = r'[a-zA-Z]+|\?|\-|\,' # r'[a-zA-Z]+'
 t_equis = r'x'
+t_espacio = r'\s'
 
 # A regular expression rule with some action code
 def t_numero(t):
