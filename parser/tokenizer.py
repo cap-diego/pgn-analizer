@@ -53,8 +53,8 @@ t_punto  = r'\.'
 t_jaque  = r'\+'
 t_jaque_mate  = r'\#'
 t_pieza  = r'[PNBRQK]'
-t_columna  = r'[a-h]'
-t_fila  = r'[1-8]'
+#t_columna  = r'[a-h]'
+#t_fila  = r'[1-8]'
 t_palabra = r'[a-zA-Z]+|\?|\-|\,' # r'[a-zA-Z]+'
 t_equis = r'x'
 t_espacio = r'\s'
@@ -62,13 +62,18 @@ t_espacio = r'\s'
 # A regular expression rule with some action code
 def t_numero(t):
     r'\d+'
-    t.value = int(t.value)    
+    t.value = int(t.value)
     return t
 
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
+# def t_palabra(t):
+#     r'[a-zA-Z]+|\?|\-|\,'
+#     t.type = 'columna' if t.value in 'abcdefgh' else 'fila' if t.value in '12345678' else 'palabra'
+#     return t
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'

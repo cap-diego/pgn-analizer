@@ -35,7 +35,15 @@ def p_jugada(p):
                 |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
                 |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
                 |   NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO COMENTARIO
-                |   NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO'''
+                |   NUMERO_JUGADA punto MOVIMIENTO NUMERO_JUGADA_OPCIONAL MOVIMIENTO
+                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO MOVIMIENTO COMENTARIO
+                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO COMENTARIO MOVIMIENTO
+                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO MOVIMIENTO COMENTARIO
+                |   NUMERO_JUGADA punto COMENTARIO MOVIMIENTO MOVIMIENTO 
+                |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO MOVIMIENTO COMENTARIO
+                |   NUMERO_JUGADA punto MOVIMIENTO COMENTARIO MOVIMIENTO
+                |   NUMERO_JUGADA punto MOVIMIENTO MOVIMIENTO COMENTARIO
+                |   NUMERO_JUGADA punto MOVIMIENTO MOVIMIENTO'''
     pass
 
 def p_numero_jugada(p):
@@ -44,8 +52,7 @@ def p_numero_jugada(p):
 
 def p_numero_jugada_opcional(p):
     '''NUMERO_JUGADA_OPCIONAL   :   NUMERO_JUGADA punto punto punto COMENTARIO
-                                |   NUMERO_JUGADA punto punto punto
-                                |   lambda'''
+                                |   NUMERO_JUGADA punto punto punto'''
     pass
 
 def p_movimiento(p):
@@ -53,8 +60,26 @@ def p_movimiento(p):
                     |   PIEZA POS_OPCIONAL PIEZA POS ESPECIAL
                     |   PIEZA equis POS ESPECIAL
                     |   PIEZA POS ESPECIAL
+                    |   PIEZA POS_OPCIONAL equis POS ESPECIAL
+                    |   PIEZA POS_OPCIONAL POS ESPECIAL
+                    |   POS_OPCIONAL equis PIEZA POS ESPECIAL
+                    |   POS_OPCIONAL PIEZA POS ESPECIAL
+                    |   equis POS ESPECIAL
+                    |   POS ESPECIAL
                     |   enroque_1 ESPECIAL
-                    |   enroque_2 ESPECIAL'''
+                    |   enroque_2 ESPECIAL
+                    |   PIEZA POS_OPCIONAL equis PIEZA POS
+                    |   PIEZA POS_OPCIONAL PIEZA POS
+                    |   PIEZA equis POS
+                    |   PIEZA POS
+                    |   PIEZA POS_OPCIONAL equis POS
+                    |   PIEZA POS_OPCIONAL POS
+                    |   POS_OPCIONAL equis PIEZA POS
+                    |   POS_OPCIONAL PIEZA POS
+                    |   equis POS
+                    |   POS
+                    |   enroque_1
+                    |   enroque_2'''
     pass
 
 # def p_equis(p):
@@ -62,24 +87,22 @@ def p_movimiento(p):
 #     pass
 
 def p_pos_opcional(p):
-    '''POS_OPCIONAL :   columna fila
-                    |   columna
-                    |   fila'''
+    '''POS_OPCIONAL :   palabra numero
+                    |   palabra
+                    |   numero'''
     pass
 
 def p_pos(p):
-    'POS    :   columna fila'
+    'POS    :   palabra numero'
     pass
 
 def p_especial(p):
     '''ESPECIAL :   jaque_mate
-                |   jaque
-                |   lambda'''
+                |   jaque'''
     pass
 
 def p_pieza(p):
-    '''PIEZA    :   pieza
-                |   lambda'''
+    '''PIEZA    :   pieza'''
     pass
 
 def p_comentario(p):
@@ -104,17 +127,18 @@ def p_comentario_real(p):
     pass
 
 def p_movimiento_opcional(p):
-    '''MOVIMIENTO_OPCIONAL  :   NUMERO_OPCIONAL MOVIMIENTO'''
+    '''MOVIMIENTO_OPCIONAL  :   NUMERO_OPCIONAL MOVIMIENTO
+                            |   MOVIMIENTO'''
     pass
 
 def p_numero_opcional(p):
-    '''NUMERO_OPCIONAL  :   NUMERO_JUGADA PUNTOS_OPCIONALES'''
+    '''NUMERO_OPCIONAL  :   NUMERO_JUGADA PUNTOS_OPCIONALES
+                        |   NUMERO_JUGADA'''
     pass
 
 def p_puntos_opcionales(p):
     '''PUNTOS_OPCIONALES    :   punto
-                            |   punto punto punto
-                            |   lambda'''
+                            |   punto punto punto'''
     pass
 
 def p_lambda(p):
@@ -124,7 +148,10 @@ def p_lambda(p):
 # Error rule for syntax errors
 def p_error(p):
     # p[0].valid = False
-    print("Syntax error")
+    if p is None:
+        print("EOF!!!")
+    else:
+        print("TOKEN QUE CAUSO EL ERROR: ", p)
 
 # Build the parser
 parser = yacc.yacc(debug=True)
