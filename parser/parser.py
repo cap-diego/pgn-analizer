@@ -118,7 +118,8 @@ def p_lambda(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    p[0].valid = False
+    #p[0].valid = False
+    print("Syntax error")
 
 # Build the parser
 parser = yacc.yacc()
