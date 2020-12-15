@@ -31,6 +31,10 @@ tokens = (
 'equis',
 )
 
+# precedence = (
+#     ('left', '', '')
+# )
+
 # Regular expression rules for simple tokens
 t_enroque_1 = r'O-O-O'
 t_enroque_2 = r'O-O'

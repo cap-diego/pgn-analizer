@@ -82,7 +82,7 @@ def p_fila(p):
     pass
 
 def p_comentario(p):
-    '''COMENTARIO   :   corchete_abre COM corchete_cierra
+    '''COMENTARIO   :   llave_abre COM llave_cierra
                     |   parentecis_abre COM parentecis_cierra
                     |   lambda'''
     pass
@@ -118,13 +118,14 @@ def p_lambda(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    #p[0].valid = False
+    # p[0].valid = False
     print("Syntax error")
 
 # Build the parser
-parser = yacc.yacc()
+parser = yacc.yacc(debug=True)
 
 if __name__ == '__main__':
+
     while True:
         try:
             s = input('calc > ')
