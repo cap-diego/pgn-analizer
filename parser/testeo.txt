@@ -1,3 +1,13 @@
-[Site "Mannheim GER"][Date "1914.08.01"]
-
-1. h1 (Notes by {e2 {nada} } Richard Reti) 1-0
+[Event "Mannheim"]
+[Site "Mannheim GER"]
+[Date "1914.08.01"]
+[EventDate "1914.07.20"]
+[Round "11"]
+[Result "1-0"]
+[White "Alexander Alekhine"]
+[Black "Hans Fahrni"]
+[ECO "C13"]
+[WhiteElo "?"]
+[BlackElo "?"]
+[PlyCount "45"]
+1. e4 {1-0 0-0 1. e5 xe6 xNf3} 1... xe6 2. d4 xd5 3. Nc3 Nxf6 4. Bg5 Be7 5. e5 Nfd7 1-0

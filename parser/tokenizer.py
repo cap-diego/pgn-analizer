@@ -148,13 +148,13 @@ def t_palabra(t):
         return t
     
     # Numero de jugada del jugador negro
-    if re.search(r'\d+\.\.\.', t.value) and len(t.value.split("...")) == 2 and t.value.split("...")[1] == '' and t.value.split("...")[0].isdigit():
+    if not en_comentario and re.search(r'\d+\.\.\.', t.value) and len(t.value.split("...")) == 2 and t.value.split("...")[1] == '' and t.value.split("...")[0].isdigit():
         t.type = 'numero_jugada_negro'
         # import pdb; pdb.set_trace()
         leer_renglones = False
         
     # Numero de jugada del jugador blanco
-    elif re.search(r'\d+\.', t.value) and len(t.value.split(".")) == 2 and t.value.split(".")[1] == '' and t.value.split(".")[0].isdigit():
+    elif not en_comentario and re.search(r'\d+\.', t.value) and len(t.value.split(".")) == 2 and t.value.split(".")[1] == '' and t.value.split(".")[0].isdigit():
         t.type = 'numero_jugada_blanco'
         # import pdb; pdb.set_trace()
         leer_renglones = False
@@ -164,23 +164,23 @@ def t_palabra(t):
         t.type ='token_movimiento'
     
     # Movimientos Finales
-    elif re.search(r'1-0', t.value):
+    elif not en_comentario and re.search(r'1-0', t.value):
         # import pdb; pdb.set_trace()
         t.type = 'gano_blanco'
         leer_renglones = True
     
-    elif re.search(r'0-1', t.value):
+    elif not en_comentario and re.search(r'0-1', t.value):
         t.type = 'gano_negro'
         leer_renglones = True
     
-    elif re.search(r'1\/2-1\/2', t.value):
+    elif not en_comentario and re.search(r'1\/2-1\/2', t.value):
         t.type = 'empate'
         leer_renglones = True
 
-    elif re.search(r'O-O-O', t.value):
+    elif not en_comentario and re.search(r'O-O-O', t.value):
         t.type = 'enroque_1'
 
-    elif re.search(r'O-O', t.value):
+    elif not en_comentario and re.search(r'O-O', t.value):
         t.type = 'enroque_2'
 
     return t

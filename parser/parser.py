@@ -3,205 +3,171 @@ import ply.yacc as yacc
 # Get the token map from the lexer.  This is required.
 from tokenizer import tokens
 
-def p_start(p):
-    '''S    :   METADATA JUGADAS S
-            |   METADATA JUGADAS
-            |   JUGADAS S
-            |   JUGADAS'''
+# Definicion de atributos 
+movimiento_tiene_captura = False
+cantidad_capturas = 0
 
-    # p[0] = "Parseado S"
-    
+def p_start(p):
+    '''S    :   METADATA JUGADAS S'''
+    p[0] = {'cantidad_capturas': p[2]['cantidad_capturas']}
+    global cantidad_capturas  
+    cantidad_capturas += p[0]['cantidad_capturas']
+
+def p_start_2(p):
+    '''S    :   METADATA JUGADAS'''
+    p[0] = {'cantidad_capturas': p[2]['cantidad_capturas']}
+    global cantidad_capturas  
+    cantidad_capturas += p[0]['cantidad_capturas']
+
+def p_start_jugadas(p):
+    '''S : JUGADAS'''
+    p[0] = {'cantidad_capturas': p[1]['cantidad_capturas']}
+    global cantidad_capturas  
+    cantidad_capturas += p[0]['cantidad_capturas']
+
+def p_start_jugadas_s(p):
+    '''S : JUGADAS S'''
+    p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + p[2]['cantidad_capturas']}
+    global cantidad_capturas  
+    cantidad_capturas += p[0]['cantidad_capturas']
 
 def p_metadata(p):
     '''METADATA : ITEM_METADATA METADATA
                 | ITEM_METADATA'''
     pass
 
-# def p_metadata_error(p):
-#     '''METADATA : ITEM_METADATA error METADATA'''
-#     print("ERROR EN METADATA: ", p)
-
 def p_item_metadata(p):
     'ITEM_METADATA  :   corchete_abre palabra espacio comilla COMENTARIO_REAL comilla corchete_cierra renglon'
     pass
 
 def p_jugadas(p):
-    '''JUGADAS  : JUGADA JUGADAS
-                | MOVIMIENTO_FINAL renglon
-                | MOVIMIENTO_FINAL '''
+    '''JUGADAS  : JUGADA JUGADAS'''
+    p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + p[2]['cantidad_capturas']}
     
+
+def p_jugadas2(p):
+    '''JUGADAS  :    MOVIMIENTO_FINAL renglon
+                |    MOVIMIENTO_FINAL'''
+    p[0] = {'cantidad_capturas': 0}
 
 def p_movimiento_final(p):
     '''MOVIMIENTO_FINAL :   gano_blanco
                         |   gano_negro
                         |   empate'''
     
-
-# def p_jugada(p):
-#     '''JUGADA   :   numero_jugada_blanco espacio COMENTARIO espacio MOVIMIENTO COMENTARIO NUMERO_JUGADA_OPCIONAL espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio COMENTARIO espacio MOVIMIENTO espacio COMENTARIO NUMERO_JUGADA_OPCIONAL espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio COMENTARIO espacio MOVIMIENTO espacio NUMERO_JUGADA_OPCIONAL espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio COMENTARIO espacio MOVIMIENTO espacio NUMERO_JUGADA_OPCIONAL espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio NUMERO_JUGADA_OPCIONAL espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio NUMERO_JUGADA_OPCIONAL espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio NUMERO_JUGADA_OPCIONAL espacio MOVIMIENTO COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio NUMERO_JUGADA_OPCIONAL espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio COMENTARIO espacio MOVIMIENTO espacio COMENTARIO espacio MOVIMIENTO COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio COMENTARIO espacio MOVIMIENTO espacio COMENTARIO espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio COMENTARIO espacio MOVIMIENTO espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio COMENTARIO espacio MOVIMIENTO espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio'''
-#     pass
-
-# def p_jugada(p):
-#     '''JUGADA   :   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio MOVIMIENTO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio
-#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio'''
-
 def p_jugada(p):
-    '''JUGADA   :   numero_jugada_blanco MOVIMIENTO J2
-                |   numero_jugada_blanco MOVIMIENTO'''
+    '''JUGADA   :   numero_jugada_blanco MOVIMIENTO J2'''
+    p[0] = {'cantidad_capturas': p[2]['tiene_captura'] + p[3]['cantidad_capturas']}
+
+def p_jugada_(p): 
+    '''JUGADA   : numero_jugada_blanco MOVIMIENTO'''
+    p[0] = {'tiene_captura': p[2]['tiene_captura']}
 
 def p_J2(p):
-    '''J2       :   COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO
-                |   COMENTARIO numero_jugada_negro MOVIMIENTO 
-                |   numero_jugada_negro MOVIMIENTO COMENTARIO 
-                |   numero_jugada_negro MOVIMIENTO 
-                |   MOVIMIENTO COMENTARIO
-                |   MOVIMIENTO
-                |   COMENTARIO'''
+    '''J2       :   COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO'''
+    p[0] = {p[1]['cantidad_capturas'] + p[3]['tiene_captura'] + p[4]['cantidad_capturas']}
+    
+def p_J22(p):
+    '''J2   :   COMENTARIO numero_jugada_negro MOVIMIENTO '''
+    p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + p[3]['tiene_captura']}
 
-# def p_JugadaCont2(p):
-#     '''J2   :    espacio MOVIMIENTO J3
-#             |   numero_jugada_negro espacio MOVIMIENTO J3
-#             |   MOVIMIENTO J3'''
-#     pass
+def p_J23(p):
+    '''J2   :   numero_jugada_negro MOVIMIENTO COMENTARIO '''
+    p[0] = {'cantidad_capturas': p[2]['tiene_captura'] + p[3]['cantidad_capturas']}
 
-# def p_JugadaCont3(p):
-#     '''J3   :   COMENTARIO espacio
-#             |   espacio'''
-#     pass
+def p_J24(p):
+    '''J2   :   numero_jugada_negro MOVIMIENTO'''
+    p[0] = {'cantidad_capturas': p[2]['tiene_captura']} 
 
-# def p_numero_jugada(p):
-#     'NUMERO_JUGADA  :   numero'
-#     pass
+def p_J2_comentario(p):
+    '''J2 : COMENTARIO'''
+    p[0] = {'cantidad_capturas': p[1]['cantidad_capturas']}
 
-# def p_numero_jugada_opcional(p):
-#     '''NUMERO_JUGADA_OPCIONAL   :   numero_jugada_negro'''
-    #  espacio COMENTARIO
-    #                             |   numero_jugada_negro'''
-    # pass
+def p_J2_movimiento(p):
+    '''J2 : MOVIMIENTO'''
+    p[0] = {'cantidad_capturas': p[1]['tiene_captura']}
 
-# def p_movimiento(p):
-#     '''MOVIMIENTO   :   PIEZA POS_OPCIONAL equis PIEZA POS ESPECIAL
-#                     |   PIEZA POS_OPCIONAL PIEZA POS ESPECIAL
-#                     |   PIEZA equis POS ESPECIAL
-#                     |   PIEZA POS ESPECIAL
-#                     |   PIEZA POS_OPCIONAL equis POS ESPECIAL
-#                     |   PIEZA POS_OPCIONAL POS ESPECIAL
-#                     |   POS_OPCIONAL equis PIEZA POS ESPECIAL
-#                     |   POS_OPCIONAL PIEZA POS ESPECIAL
-#                     |   equis POS ESPECIAL
-#                     |   POS ESPECIAL
-#                     |   enroque_1 ESPECIAL
-#                     |   enroque_2 ESPECIAL
-#                     |   PIEZA POS_OPCIONAL equis PIEZA POS
-#                     |   PIEZA POS_OPCIONAL PIEZA POS
-#                     |   PIEZA equis POS
-#                     |   PIEZA POS
-#                     |   PIEZA POS_OPCIONAL equis POS
-#                     |   PIEZA POS_OPCIONAL POS
-#                     |   POS_OPCIONAL equis PIEZA POS
-#                     |   POS_OPCIONAL PIEZA POS
-#                     |   equis POS
-#                     |   POS
-#                     |   enroque_1
-#                     |   enroque_2'''
-                    
-#     pass
-
+def p_J2_movimiento_comentario(p):
+    '''J2 : MOVIMIENTO COMENTARIO'''
+    p[0] = {'cantidad_capturas': p[1]['tiene_captura'] + p[2]['cantidad_capturas']}
+    
 def p_movimiento(p):
-    '''MOVIMIENTO   :   token_movimiento ESPECIAL
-                    |   enroque_1 ESPECIAL
-                    |   enroque_2 ESPECIAL
-                    |   token_movimiento
-                    |   enroque_1
-                    |   enroque_2'''
-    pass 
+    '''MOVIMIENTO   :   token_movimiento ESPECIAL'''
+    p[0] = {'tiene_captura' : 1 if "x" in str(p[1]).lower() else 0}
 
-# def p_equis(p):
-#     '''X    :   equis'''
-#     pass
 
-# def p_pos_opcional(p):
-#     '''POS_OPCIONAL :   palabra numero
-#                     |   palabra
-#                     |   numero'''
-#     pass
+def p_movimiento_enroque_1_especial(p):
+    '''MOVIMIENTO   :   enroque_1 ESPECIAL'''
+    p[0] = {'tiene_captura': 0}
 
-# def p_pos(p):
-#     'POS    :   palabra numero'
-#     pass
+def p_movimiento_enroque_2_especial(p):
+    '''MOVIMIENTO   :   enroque_2 ESPECIAL'''
+    p[0] = {'tiene_captura': 0}
+
+def p_movimiento_enroque_1(p):
+    '''MOVIMIENTO   :   enroque_1'''
+    p[0] = {'tiene_captura': 0}
+    
+def p_movimiento_enroque_2(p):
+    '''MOVIMIENTO   :   enroque_2'''
+    p[0] = {'tiene_captura': 0}
+
+
+def p_movimiento_token_movimiento(p):
+    '''MOVIMIENTO   : token_movimiento'''
+    p[0] = {'tiene_captura' : 1 if "x" in str(p[1]).lower() else 0}
 
 def p_especial(p):
     '''ESPECIAL :   jaque_mate
                 |   jaque'''
-    pass
-
-# def p_pieza(p):
-#     '''PIEZA    :   pieza'''
-#     pass
 
 def p_comentario(p):
-    '''COMENTARIO   :   llave_abre COM llave_cierra
-                    |   parentecis_abre COM parentecis_cierra
-                    |   llave_abre llave_cierra
-                    |   parentecis_abre parentecis_cierra'''
-    pass
+    '''COMENTARIO   :   llave_abre COM llave_cierra'''
+    p[0] = {'cantidad_capturas': p[2]['cantidad_capturas']}
+
+def p_comentario_parentesis_abre_solo(p):
+    '''COMENTARIO  : parentecis_abre parentecis_cierra'''    
+    p[0] = {'cantidad_capturas': 0}
+    
+def p_comentario_parentesis_abre(p):
+    '''COMENTARIO  : parentecis_abre COM parentecis_cierra'''
+    p[0] = {'cantidad_capturas': p[2]['cantidad_capturas']}
+    
+def p_comentario_llave_abre_solo(p):
+    '''COMENTARIO   :    llave_abre llave_cierra'''
+    p[0] = {'cantidad_capturas': 0}
 
 def p_com(p):
-    '''COM  :   palabra COM 
-            |   MOVIMIENTO_OPCIONAL COM
-            |   COMENTARIO COM
-            |   espacio COM
-            |   palabra
-            |   MOVIMIENTO_OPCIONAL 
-            |   COMENTARIO
+    '''COM  :   palabra
             |   espacio'''
-    pass
+            
+    p[0] = {'cantidad_capturas': 0}
+
+def p_com2(p):
+    '''COM  :   palabra COM 
+            |   espacio COM'''
+    p[0] = {'cantidad_capturas': p[2]['cantidad_capturas']}
+
+def p_com3(p):
+    '''COM  :   MOVIMIENTO_OPCIONAL COM
+            |   MOVIMIENTO_OPCIONAL'''
+    
+    val = 0 if len(p) <= 2 else p[2]['cantidad_capturas']
+    p[0] = {'cantidad_capturas' : p[1]['cantidad_capturas'] + val} 
+
+def p_com4(p):
+    '''COM  :   COMENTARIO COM
+            |   COMENTARIO '''
+    val = p[2]['cantidad_capturas'] if len(p) > 2 else 0
+    p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + val}
 
 def p_comentario_real(p):
     '''COMENTARIO_REAL      :   palabra espacio COMENTARIO_REAL
                             |   palabra '''
-    pass
 
-    
 def p_movimiento_opcional(p):
     '''MOVIMIENTO_OPCIONAL  :   token_movimiento'''
-    pass
-
-# def p_numero_opcional(p):
-#     '''NUMERO_OPCIONAL  :   NUMERO_JUGADA PUNTOS_OPCIONALES
-#                         |   NUMERO_JUGADA'''
-#     pass
-
-# def p_puntos_opcionales(p):
-#     '''PUNTOS_OPCIONALES    :   punto
-#                             |   punto punto punto'''
-#     pass
-
-# def p_lambda(p):
-#     'lambda :'
-#     pass
+    p[0] = {'cantidad_capturas': 1 if "x" in str(p[1]).lower() else 0}
 
 class LexerError(BaseException): pass
 
@@ -218,7 +184,6 @@ def p_error(p):
 parser = yacc.yacc(debug=True)
 
 if __name__ == '__main__':
-
     f = open("testeo.txt", "r")
     s = f.read()
     print("Parseando . . .")
@@ -228,3 +193,6 @@ if __name__ == '__main__':
         print(err)
     else:
         print("OK")
+        print("Cantidad de capturas {}".format(cantidad_capturas))
+    
+    f.close()
