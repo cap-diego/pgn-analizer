@@ -142,8 +142,6 @@ def t_palabra(t):
     # Matchea con todo lo que no esté separado por espacios
     # Hay que re tokenizar todos los valores a mano
 
-    # import pdb; pdb.set_trace()
-
     if en_metadata:
         return t
     
@@ -184,17 +182,6 @@ def t_palabra(t):
         t.type = 'enroque_2'
 
     return t
-
-# A regular expression rule with some action code
-# def t_numero(t):
-#     r'\d+'
-#     t.value = int(t.value)
-#     return t
-
-# def t_palabra(t):
-#     r'[a-zA-Z]+|\?|\-|\,'
-#     t.type = 'columna' if t.value in 'abcdefgh' else 'fila' if t.value in '12345678' else 'palabra'
-#     return t
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = '\t'

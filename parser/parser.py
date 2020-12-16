@@ -7,21 +7,24 @@ from tokenizer import tokens
 movimiento_tiene_captura = False
 cantidad_capturas = 0
 captura_texto = ""
+ultima_jugada = 0
 
 def p_start(p):
     '''S    :   METADATA JUGADAS S'''
     p[0] = {'cantidad_capturas': p[2]['cantidad_capturas']}
-    p[0]['captura_texto'] = p[2]['captura_texto'] + " " + p[3]['captura_texto']  
+    p[0]['captura_texto'] = p[2]['captura_texto'] + " " + p[3]['captura_texto']
+
     global cantidad_capturas  
     global captura_texto
     cantidad_capturas += p[0]['cantidad_capturas']
     captura_texto += p[0]['captura_texto'].replace("  ", "")
 
+
 def p_start_2(p):
     '''S    :   METADATA JUGADAS'''
     p[0] = {'cantidad_capturas': p[2]['cantidad_capturas']}
     p[0]['captura_texto'] = p[2]['captura_texto']
-    global cantidad_capturas  
+    global cantidad_capturas
     global captura_texto
     cantidad_capturas += p[0]['cantidad_capturas']
     captura_texto += p[0]['captura_texto'] 
@@ -57,6 +60,7 @@ def p_jugadas(p):
     '''JUGADAS  : JUGADA JUGADAS'''
     p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + p[2]['cantidad_capturas']}
     p[0]['captura_texto'] = p[1]['captura_texto'] + " " + p[2]['captura_texto']
+    
 
 def p_jugadas2(p):
     '''JUGADAS  :    MOVIMIENTO_FINAL renglon
@@ -68,9 +72,20 @@ def p_movimiento_final(p):
     '''MOVIMIENTO_FINAL :   gano_blanco
                         |   gano_negro
                         |   empate'''
+    global ultima_jugada
+    ultima_jugada = 0
+    print("TERMINO PARTIDA")
     
 def p_jugada(p):
     '''JUGADA   :   numero_jugada_blanco MOVIMIENTO J2'''
+    print("Numero de jugada {}".format(p[1]))
+    numero_jugada = int(p[1].split(".")[0])
+    global ultima_jugada
+    if numero_jugada != ultima_jugada + 1:
+        raise LexerError("Número de Jugada invalido: llegó {} y se esperaba {}".format(numero_jugada, ultima_jugada + 1))
+
+    ultima_jugada += 1
+    
     p[0] = {'cantidad_capturas': p[2]['tiene_captura'] + p[3]['cantidad_capturas']}
     p[0]['captura_texto'] = ""
     
@@ -81,8 +96,14 @@ def p_jugada(p):
     
     p[0]['captura_texto'] += "-->" if p[2]['tiene_captura'] or p[3]['cantidad_capturas'] > 0 else ""
 
-def p_jugada_(p): 
+def p_jugada_2(p): 
     '''JUGADA   :   numero_jugada_blanco MOVIMIENTO'''
+    numero_jugada = int(p[1].split(".")[0])
+    global ultima_jugada
+    if numero_jugada != ultima_jugada + 1:
+        raise LexerError("Número de Jugada invalido: llegó {} y se esperaba {}".format(numero_jugada, ultima_jugada + 1))
+    ultima_jugada += 1
+    print("Numero de jugada2 {}".format(p[1]))
     p[0] = {'cantidad_capturas': p[2]['tiene_captura']}
     p[0]['captura_texto'] = ""
     if p[0]['cantidad_capturas'] > 0:
