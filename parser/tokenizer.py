@@ -21,19 +21,20 @@ tokens = (
 'parentecis_abre',
 'parentecis_cierra',
 'comilla',
-'punto',
+#'punto',
 'jaque',
 'jaque_mate',
-'pieza',
-'columna',
-'fila',
+#'pieza',
+#'columna',
+#'fila',
 'palabra',
-'numero',
+#'numero',
 'numero_jugada_negro',
 'numero_jugada_blanco',
-'equis',
+#'equis',
 'espacio',
 'token_movimiento',
+'renglon'
 )
 
 # precedence = (
@@ -43,32 +44,50 @@ tokens = (
 # Regular expression rules for simple tokens
 t_enroque_1 = r'O-O-O'
 t_enroque_2 = r'O-O'
-t_gano_blanco  = r'1-0'
-t_gano_negro  = r'0-1'
-t_empate  = r'1\/2-1\/2'
+# t_gano_blanco  = r'1-0'
+# t_gano_negro  = r'0-1'
+# t_empate  = r'1\/2-1\/2'
 # t_corchete_abre  = r'\['
 # t_corchete_cierra  = r'\]'
 # t_llave_abre  = r'\{'
 # t_llave_cierra  = r'\}'
 # t_parentecis_abre  = r'\('
 # t_parentecis_cierra  = r'\)'
-t_comilla  = r'\"'
+# t_comilla  = r'\"'
 # t_punto  = r'\.'
 t_jaque  = r'\+'
 t_jaque_mate  = r'\#'
-t_pieza  = r'[PNBRQK]'
+# t_pieza  = r'[PNBRQK]'
 # t_columna  = r'[a-h]'
 # t_fila  = r'[1-8]'
 # t_palabra = r'[a-zA-Z]+|\?|\-|\,' # r'[a-zA-Z]+'
 # t_equis = r'x'
-t_espacio = r'\s'
+# t_espacio = r'\s'
+# t_renglon = r'\n'
 
-def t_corchete_cierra(t):
-    r'\]'
+
+def t_espacio(t):
+    r'[^\S\n\t]'
+    # import pdb;pdb.set_trace()
+    return t
+    
+# Define a rule so we can track line numbers
+def t_renglon(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+    return t
+
+def t_comilla(t):
+    r'\"'
     return t
 
 def t_corchete_abre(t):
     r'\['
+    # import pdb; pdb.set_trace()
+    return t
+
+def t_corchete_cierra(t):
+    r'\]'
     return t
 
 def t_llave_abre(t):
@@ -88,35 +107,41 @@ def t_parentecis_cierra(t):
     return t
 
 def t_palabra(t):
-    r'[^\s]+'
+    r'[^(\s|\"|\]|\[|\{|\})]+'
 
     # Matchea con todo lo que no esté separado por espacios
     # Hay que re tokenizar todos los valores a mano
     
     # Numero de jugada del jugador negro
-    if re.search(r'\d+\.\.\.', t.value) != None and len(t.value.split("...")) == 2 and t.value.split("...")[1] == '':
+    if re.search(r'\d+\.\.\.', t.value) and len(t.value.split("...")) == 2 and t.value.split("...")[1] == '':
         t.type = 'numero_jugada_negro'
     
     # Numero de jugada del jugador blanco
-    elif re.search(r'\d+\.', t.value) != None and len(t.value.split(".")) == 2 and t.value.split(".")[1] == '':
+    elif re.search(r'\d+\.', t.value) and len(t.value.split(".")) == 2 and t.value.split(".")[1] == '':
         t.type = 'numero_jugada_blanco'
 
-    # Movimientos
-    elif len(t.value) <= 7 and re.search(r'[PNBRQK]?[a-h]?[1-8]?x?[PNBRQK]?[a-h][1-8]', t.value):
+    # Movimientos 
+    elif re.search(r'[PNBRQK]?[a-h]?[1-8]?x?[PNBRQK]?[a-h][1-8]', t.value):
         t.type ='token_movimiento'
+    
+    # Movimientos Finales
+    elif re.search(r'1-0', t.value):
+        # import pdb; pdb.set_trace()
+        t.type = 'gano_blanco'
+    
+    elif re.search(r'0-1', t.value):
+        t.type = 'gano_negro'
+    
+    elif re.search(r'1\/2-1\/2', t.value):
+        t.type = 'empate'
 
     return t
 
 # A regular expression rule with some action code
-def t_numero(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
-
-# Define a rule so we can track line numbers
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
+# def t_numero(t):
+#     r'\d+'
+#     t.value = int(t.value)
+#     return t
 
 # def t_palabra(t):
 #     r'[a-zA-Z]+|\?|\-|\,'
@@ -124,7 +149,7 @@ def t_newline(t):
 #     return t
 
 # A string containing ignored characters (spaces and tabs)
-t_ignore  = ' \t'
+t_ignore  = '\t'
 
 # Error handling rule
 def t_error(t):
@@ -142,8 +167,11 @@ if __name__ == '__main__':
     '''
 
     # Give the lexer some input
-    lexer.input(data)
+    # lexer.input(data)
 
+    f = open("testeo.txt", "r")
+    s = f.read()
+    lexer.input(s)
     # Tokenize
     while True:
         tok = lexer.token()
