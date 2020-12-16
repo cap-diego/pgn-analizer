@@ -8,6 +8,8 @@ import ply.lex as lex
 import re
 
 leer_renglones = True
+en_metadata = False
+en_comentario = 0
 
 # List of token names.   This is always required
 tokens = (
@@ -44,8 +46,8 @@ tokens = (
 # )
 
 # Regular expression rules for simple tokens
-t_enroque_1 = r'O-O-O'
-t_enroque_2 = r'O-O'
+# t_enroque_1 = r'O-O-O'
+# t_enroque_2 = r'O-O'
 # t_gano_blanco  = r'1-0'
 # t_gano_negro  = r'0-1'
 # t_empate  = r'1\/2-1\/2'
@@ -71,7 +73,11 @@ t_jaque_mate  = r'\#'
 def t_espacio(t):
     r'[^\S\n\t]'
     # import pdb;pdb.set_trace()
-    return t
+    global en_metadata
+    global en_comentario
+
+    if en_metadata or en_comentario > 0:
+        return t
 
 # Define a rule so we can track line numbers
 def t_renglon(t):
@@ -84,11 +90,16 @@ def t_renglon(t):
 
 def t_comilla(t):
     r'\"'
+    # import pdb; pdb.set_trace()
+    global en_metadata
+    en_metadata = not en_metadata
     return t
 
 def t_corchete_abre(t):
     r'\['
     # import pdb; pdb.set_trace()
+    global leer_renglones
+    leer_renglones = True
     return t
 
 def t_corchete_cierra(t):
@@ -97,34 +108,48 @@ def t_corchete_cierra(t):
 
 def t_llave_abre(t):
     r'\{'
+    global en_comentario
+    en_comentario += 1
     return t
 
 def t_llave_cierra(t):
     r'\}'
+    global en_comentario
+    en_comentario -= 1
     return t
 
 def t_parentecis_abre(t):
     r'\('
+    global en_comentario
+    en_comentario += 1
     return t
 
 def t_parentecis_cierra(t):
     r'\)'
+    global en_comentario
+    en_comentario -= 1
     return t
 
 def t_palabra(t):
     r'[^(\s|\"|\]|\[|\{|\})]+'
     global leer_renglones
+    global en_metadata
     # Matchea con todo lo que no esté separado por espacios
     # Hay que re tokenizar todos los valores a mano
+
+    # import pdb; pdb.set_trace()
+
+    if en_metadata:
+        return t
     
     # Numero de jugada del jugador negro
-    if re.search(r'\d+\.\.\.', t.value) and len(t.value.split("...")) == 2 and t.value.split("...")[1] == '':
+    if re.search(r'\d+\.\.\.', t.value) and len(t.value.split("...")) == 2 and t.value.split("...")[1] == '' and t.value.split("...")[0].isdigit():
         t.type = 'numero_jugada_negro'
         # import pdb; pdb.set_trace()
         leer_renglones = False
         
     # Numero de jugada del jugador blanco
-    elif re.search(r'\d+\.', t.value) and len(t.value.split(".")) == 2 and t.value.split(".")[1] == '':
+    elif re.search(r'\d+\.', t.value) and len(t.value.split(".")) == 2 and t.value.split(".")[1] == '' and t.value.split(".")[0].isdigit():
         t.type = 'numero_jugada_blanco'
         # import pdb; pdb.set_trace()
         leer_renglones = False
@@ -137,12 +162,21 @@ def t_palabra(t):
     elif re.search(r'1-0', t.value):
         # import pdb; pdb.set_trace()
         t.type = 'gano_blanco'
+        leer_renglones = True
     
     elif re.search(r'0-1', t.value):
         t.type = 'gano_negro'
+        leer_renglones = True
     
     elif re.search(r'1\/2-1\/2', t.value):
         t.type = 'empate'
+        leer_renglones = True
+
+    elif re.search(r'O-O-O', t.value):
+        t.type = 'enroque_1'
+
+    elif re.search(r'O-O', t.value):
+        t.type = 'enroque_2'
 
     return t
 

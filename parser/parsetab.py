@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'comilla corchete_abre corchete_cierra empate enroque_1 enroque_2 espacio gano_blanco gano_negro jaque jaque_mate llave_abre llave_cierra numero_jugada_blanco numero_jugada_negro palabra parentecis_abre parentecis_cierra renglon token_movimientoS    :   METADATA JUGADAS\n            |   JUGADASMETADATA : ITEM_METADATA METADATA\n                | ITEM_METADATAITEM_METADATA  :   corchete_abre palabra espacio comilla COMENTARIO_REAL comilla corchete_cierra renglonJUGADAS  : JUGADA JUGADAS\n                | MOVIMIENTO_FINALMOVIMIENTO_FINAL :   gano_blanco\n                        |   gano_negro\n                        |   empateJUGADA   :   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio\n                |   numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio\n                |   numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio\n                |   numero_jugada_blanco espacio MOVIMIENTO espacio MOVIMIENTO espacio\n                |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio\n                |   numero_jugada_blanco espacio MOVIMIENTO espacio\n                |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacioMOVIMIENTO   :   token_movimiento ESPECIAL\n                    |   enroque_1 ESPECIAL\n                    |   enroque_2 ESPECIAL\n                    |   token_movimiento\n                    |   enroque_1\n                    |   enroque_2ESPECIAL :   jaque_mate\n                |   jaqueCOMENTARIO   :   llave_abre COM llave_cierra\n                    |   parentecis_abre COM parentecis_cierra\n                    |   llave_abre llave_cierra\n                    |   parentecis_abre parentecis_cierraCOM  :   palabra COM \n            |   MOVIMIENTO_OPCIONAL COM\n            |   COMENTARIO COM\n            |   espacio COM\n            |   palabra\n            |   MOVIMIENTO_OPCIONAL \n            |   COMENTARIO\n            |   espacioCOMENTARIO_REAL      :   palabra espacio COMENTARIO_REAL\n                            |   palabra MOVIMIENTO_OPCIONAL  :   token_movimiento'
+_lr_signature = 'comilla corchete_abre corchete_cierra empate enroque_1 enroque_2 espacio gano_blanco gano_negro jaque jaque_mate llave_abre llave_cierra numero_jugada_blanco numero_jugada_negro palabra parentecis_abre parentecis_cierra renglon token_movimientoS    :   METADATA JUGADAS S\n            |   METADATA JUGADAS\n            |   JUGADAS S\n            |   JUGADASMETADATA : ITEM_METADATA METADATA\n                | ITEM_METADATAITEM_METADATA  :   corchete_abre palabra comilla COMENTARIO_REAL comilla corchete_cierra renglonJUGADAS  : JUGADA JUGADAS\n                | MOVIMIENTO_FINAL renglon\n                | MOVIMIENTO_FINAL MOVIMIENTO_FINAL :   gano_blanco\n                        |   gano_negro\n                        |   empateJUGADA   :   numero_jugada_blanco MOVIMIENTO J2\n                |   numero_jugada_blanco MOVIMIENTOJ2       :   COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO\n                |   COMENTARIO numero_jugada_negro MOVIMIENTO \n                |   numero_jugada_negro MOVIMIENTO COMENTARIO \n                |   numero_jugada_negro MOVIMIENTO \n                |   MOVIMIENTO COMENTARIO\n                |   MOVIMIENTO\n                |   COMENTARIOMOVIMIENTO   :   token_movimiento ESPECIAL\n                    |   enroque_1 ESPECIAL\n                    |   enroque_2 ESPECIAL\n                    |   token_movimiento\n                    |   enroque_1\n                    |   enroque_2ESPECIAL :   jaque_mate\n                |   jaqueCOMENTARIO   :   llave_abre COM llave_cierra\n                    |   parentecis_abre COM parentecis_cierra\n                    |   llave_abre llave_cierra\n                    |   parentecis_abre parentecis_cierraCOM  :   palabra COM \n            |   MOVIMIENTO_OPCIONAL COM\n            |   COMENTARIO COM\n            |   espacio COM\n            |   palabra\n            |   MOVIMIENTO_OPCIONAL \n            |   COMENTARIO\n            |   espacioCOMENTARIO_REAL      :   palabra espacio COMENTARIO_REAL\n                            |   palabra MOVIMIENTO_OPCIONAL  :   token_movimiento'
     
-_lr_action_items = {'corchete_abre':([0,4,60,],[7,7,-5,]),'numero_jugada_blanco':([0,2,4,5,13,23,38,39,60,62,65,66,68,],[8,8,-4,8,-3,-16,-14,-15,-5,-13,-17,-12,-11,]),'gano_blanco':([0,2,4,5,13,23,38,39,60,62,65,66,68,],[9,9,-4,9,-3,-16,-14,-15,-5,-13,-17,-12,-11,]),'gano_negro':([0,2,4,5,13,23,38,39,60,62,65,66,68,],[10,10,-4,10,-3,-16,-14,-15,-5,-13,-17,-12,-11,]),'empate':([0,2,4,5,13,23,38,39,60,62,65,66,68,],[11,11,-4,11,-3,-16,-14,-15,-5,-13,-17,-12,-11,]),'$end':([1,3,6,9,10,11,12,14,],[0,-2,-7,-8,-9,-10,-1,-6,]),'palabra':([7,22,34,35,36,42,43,44,45,46,47,49,54,59,],[15,29,43,43,29,-28,43,43,43,43,-40,-29,-26,-27,]),'espacio':([8,15,18,19,20,21,24,25,26,27,28,29,31,32,33,34,35,42,43,44,45,46,47,49,52,53,54,59,63,64,67,],[16,17,23,-21,-22,-23,-18,-24,-25,-19,-20,36,38,39,40,46,46,-28,46,46,46,46,-40,-29,61,62,-26,-27,65,66,68,]),'token_movimiento':([16,23,34,35,40,42,43,44,45,46,47,49,54,59,61,],[19,19,47,47,19,-28,47,47,47,47,-40,-29,-26,-27,19,]),'enroque_1':([16,23,40,61,],[20,20,20,20,]),'enroque_2':([16,23,40,61,],[21,21,21,21,]),'comilla':([17,29,30,50,],[22,-39,37,-38,]),'jaque_mate':([19,20,21,],[25,25,25,]),'jaque':([19,20,21,],[26,26,26,]),'numero_jugada_negro':([23,39,],[33,52,]),'llave_abre':([23,34,35,42,43,44,45,46,47,49,54,59,62,65,],[34,34,34,-28,34,34,34,34,-40,-29,-26,-27,34,34,]),'parentecis_abre':([23,34,35,42,43,44,45,46,47,49,54,59,62,65,],[35,35,35,-28,35,35,35,35,-40,-29,-26,-27,35,35,]),'llave_cierra':([34,41,42,43,44,45,46,47,49,54,55,56,57,58,59,],[42,54,-28,-34,-35,-36,-37,-40,-29,-26,-30,-31,-32,-33,-27,]),'parentecis_cierra':([35,42,43,44,45,46,47,48,49,54,55,56,57,58,59,],[49,-28,-34,-35,-36,-37,-40,59,-29,-26,-30,-31,-32,-33,-27,]),'corchete_cierra':([37,],[51,]),'renglon':([51,],[60,]),}
+_lr_action_items = {'corchete_abre':([0,3,4,6,9,10,11,12,15,16,62,],[7,7,7,-10,-11,-12,-13,7,-8,-9,-7,]),'numero_jugada_blanco':([0,2,3,4,5,6,9,10,11,12,14,15,16,18,19,20,21,24,25,26,30,31,32,33,34,37,39,41,48,51,52,53,58,61,62,],[8,8,8,-6,8,-10,-11,-12,-13,8,-5,-8,-9,-15,-26,-27,-28,-21,-14,-22,-23,-29,-30,-24,-25,-20,-19,-33,-34,-17,-18,-31,-32,-16,-7,]),'gano_blanco':([0,2,3,4,5,6,9,10,11,12,14,15,16,18,19,20,21,24,25,26,30,31,32,33,34,37,39,41,48,51,52,53,58,61,62,],[9,9,9,-6,9,-10,-11,-12,-13,9,-5,-8,-9,-15,-26,-27,-28,-21,-14,-22,-23,-29,-30,-24,-25,-20,-19,-33,-34,-17,-18,-31,-32,-16,-7,]),'gano_negro':([0,2,3,4,5,6,9,10,11,12,14,15,16,18,19,20,21,24,25,26,30,31,32,33,34,37,39,41,48,51,52,53,58,61,62,],[10,10,10,-6,10,-10,-11,-12,-13,10,-5,-8,-9,-15,-26,-27,-28,-21,-14,-22,-23,-29,-30,-24,-25,-20,-19,-33,-34,-17,-18,-31,-32,-16,-7,]),'empate':([0,2,3,4,5,6,9,10,11,12,14,15,16,18,19,20,21,24,25,26,30,31,32,33,34,37,39,41,48,51,52,53,58,61,62,],[11,11,11,-6,11,-10,-11,-12,-13,11,-5,-8,-9,-15,-26,-27,-28,-21,-14,-22,-23,-29,-30,-24,-25,-20,-19,-33,-34,-17,-18,-31,-32,-16,-7,]),'$end':([1,3,6,9,10,11,12,13,15,16,22,],[0,-4,-10,-11,-12,-13,-2,-3,-8,-9,-1,]),'renglon':([6,9,10,11,60,],[16,-11,-12,-13,62,]),'palabra':([7,23,28,29,41,42,43,44,45,46,48,49,53,58,],[17,35,42,42,-33,42,42,42,42,-45,-34,35,-31,-32,]),'token_movimiento':([8,18,19,20,21,27,28,29,30,31,32,33,34,38,41,42,43,44,45,46,48,53,58,],[19,19,-26,-27,-28,19,46,46,-23,-29,-30,-24,-25,19,-33,46,46,46,46,-45,-34,-31,-32,]),'enroque_1':([8,18,19,20,21,27,30,31,32,33,34,38,],[20,20,-26,-27,-28,20,-23,-29,-30,-24,-25,20,]),'enroque_2':([8,18,19,20,21,27,30,31,32,33,34,38,],[21,21,-26,-27,-28,21,-23,-29,-30,-24,-25,21,]),'comilla':([17,35,36,59,],[23,-44,50,-43,]),'numero_jugada_negro':([18,19,20,21,26,30,31,32,33,34,41,48,53,58,],[27,-26,-27,-28,38,-23,-29,-30,-24,-25,-33,-34,-31,-32,]),'llave_abre':([18,19,20,21,24,28,29,30,31,32,33,34,39,41,42,43,44,45,46,48,51,53,58,],[28,-26,-27,-28,28,28,28,-23,-29,-30,-24,-25,28,-33,28,28,28,28,-45,-34,28,-31,-32,]),'parentecis_abre':([18,19,20,21,24,28,29,30,31,32,33,34,39,41,42,43,44,45,46,48,51,53,58,],[29,-26,-27,-28,29,29,29,-23,-29,-30,-24,-25,29,-33,29,29,29,29,-45,-34,29,-31,-32,]),'jaque_mate':([19,20,21,],[31,31,31,]),'jaque':([19,20,21,],[32,32,32,]),'llave_cierra':([28,40,41,42,43,44,45,46,48,53,54,55,56,57,58,],[41,53,-33,-39,-40,-41,-42,-45,-34,-31,-35,-36,-37,-38,-32,]),'espacio':([28,29,35,41,42,43,44,45,46,48,53,58,],[45,45,49,-33,45,45,45,45,-45,-34,-31,-32,]),'parentecis_cierra':([29,41,42,43,44,45,46,47,48,53,54,55,56,57,58,],[48,-33,-39,-40,-41,-42,-45,58,-34,-31,-35,-36,-37,-38,-32,]),'corchete_cierra':([50,],[60,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'S':([0,],[1,]),'METADATA':([0,4,],[2,13,]),'JUGADAS':([0,2,5,],[3,12,14,]),'ITEM_METADATA':([0,4,],[4,4,]),'JUGADA':([0,2,5,],[5,5,5,]),'MOVIMIENTO_FINAL':([0,2,5,],[6,6,6,]),'MOVIMIENTO':([16,23,40,61,],[18,31,53,63,]),'ESPECIAL':([19,20,21,],[24,27,28,]),'COMENTARIO_REAL':([22,36,],[30,50,]),'COMENTARIO':([23,34,35,43,44,45,46,62,65,],[32,45,45,45,45,45,45,64,67,]),'COM':([34,35,43,44,45,46,],[41,48,55,56,57,58,]),'MOVIMIENTO_OPCIONAL':([34,35,43,44,45,46,],[44,44,44,44,44,44,]),}
+_lr_goto_items = {'S':([0,3,12,],[1,13,22,]),'METADATA':([0,3,4,12,],[2,2,14,2,]),'JUGADAS':([0,2,3,5,12,],[3,12,3,15,3,]),'ITEM_METADATA':([0,3,4,12,],[4,4,4,4,]),'JUGADA':([0,2,3,5,12,],[5,5,5,5,5,]),'MOVIMIENTO_FINAL':([0,2,3,5,12,],[6,6,6,6,6,]),'MOVIMIENTO':([8,18,27,38,],[18,24,39,51,]),'J2':([18,],[25,]),'COMENTARIO':([18,24,28,29,39,42,43,44,45,51,],[26,37,44,44,52,44,44,44,44,61,]),'ESPECIAL':([19,20,21,],[30,33,34,]),'COMENTARIO_REAL':([23,49,],[36,59,]),'COM':([28,29,42,43,44,45,],[40,47,54,55,56,57,]),'MOVIMIENTO_OPCIONAL':([28,29,42,43,44,45,],[43,43,43,43,43,43,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,44 +27,49 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> S","S'",1,None,None,None),
-  ('S -> METADATA JUGADAS','S',2,'p_start','parser.py',7),
-  ('S -> JUGADAS','S',1,'p_start','parser.py',8),
-  ('METADATA -> ITEM_METADATA METADATA','METADATA',2,'p_metadata','parser.py',14),
-  ('METADATA -> ITEM_METADATA','METADATA',1,'p_metadata','parser.py',15),
-  ('ITEM_METADATA -> corchete_abre palabra espacio comilla COMENTARIO_REAL comilla corchete_cierra renglon','ITEM_METADATA',8,'p_item_metadata','parser.py',23),
-  ('JUGADAS -> JUGADA JUGADAS','JUGADAS',2,'p_jugadas','parser.py',27),
-  ('JUGADAS -> MOVIMIENTO_FINAL','JUGADAS',1,'p_jugadas','parser.py',28),
-  ('MOVIMIENTO_FINAL -> gano_blanco','MOVIMIENTO_FINAL',1,'p_movimiento_final','parser.py',32),
-  ('MOVIMIENTO_FINAL -> gano_negro','MOVIMIENTO_FINAL',1,'p_movimiento_final','parser.py',33),
-  ('MOVIMIENTO_FINAL -> empate','MOVIMIENTO_FINAL',1,'p_movimiento_final','parser.py',34),
-  ('JUGADA -> numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio','JUGADA',12,'p_jugada','parser.py',62),
-  ('JUGADA -> numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio','JUGADA',10,'p_jugada','parser.py',63),
-  ('JUGADA -> numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio','JUGADA',8,'p_jugada','parser.py',64),
-  ('JUGADA -> numero_jugada_blanco espacio MOVIMIENTO espacio MOVIMIENTO espacio','JUGADA',6,'p_jugada','parser.py',65),
-  ('JUGADA -> numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio','JUGADA',6,'p_jugada','parser.py',66),
-  ('JUGADA -> numero_jugada_blanco espacio MOVIMIENTO espacio','JUGADA',4,'p_jugada','parser.py',67),
-  ('JUGADA -> numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio','JUGADA',10,'p_jugada','parser.py',68),
-  ('MOVIMIENTO -> token_movimiento ESPECIAL','MOVIMIENTO',2,'p_movimiento','parser.py',121),
-  ('MOVIMIENTO -> enroque_1 ESPECIAL','MOVIMIENTO',2,'p_movimiento','parser.py',122),
-  ('MOVIMIENTO -> enroque_2 ESPECIAL','MOVIMIENTO',2,'p_movimiento','parser.py',123),
-  ('MOVIMIENTO -> token_movimiento','MOVIMIENTO',1,'p_movimiento','parser.py',124),
-  ('MOVIMIENTO -> enroque_1','MOVIMIENTO',1,'p_movimiento','parser.py',125),
-  ('MOVIMIENTO -> enroque_2','MOVIMIENTO',1,'p_movimiento','parser.py',126),
-  ('ESPECIAL -> jaque_mate','ESPECIAL',1,'p_especial','parser.py',144),
-  ('ESPECIAL -> jaque','ESPECIAL',1,'p_especial','parser.py',145),
-  ('COMENTARIO -> llave_abre COM llave_cierra','COMENTARIO',3,'p_comentario','parser.py',153),
-  ('COMENTARIO -> parentecis_abre COM parentecis_cierra','COMENTARIO',3,'p_comentario','parser.py',154),
-  ('COMENTARIO -> llave_abre llave_cierra','COMENTARIO',2,'p_comentario','parser.py',155),
-  ('COMENTARIO -> parentecis_abre parentecis_cierra','COMENTARIO',2,'p_comentario','parser.py',156),
-  ('COM -> palabra COM','COM',2,'p_com','parser.py',160),
-  ('COM -> MOVIMIENTO_OPCIONAL COM','COM',2,'p_com','parser.py',161),
-  ('COM -> COMENTARIO COM','COM',2,'p_com','parser.py',162),
-  ('COM -> espacio COM','COM',2,'p_com','parser.py',163),
-  ('COM -> palabra','COM',1,'p_com','parser.py',164),
-  ('COM -> MOVIMIENTO_OPCIONAL','COM',1,'p_com','parser.py',165),
-  ('COM -> COMENTARIO','COM',1,'p_com','parser.py',166),
-  ('COM -> espacio','COM',1,'p_com','parser.py',167),
-  ('COMENTARIO_REAL -> palabra espacio COMENTARIO_REAL','COMENTARIO_REAL',3,'p_comentario_real','parser.py',171),
-  ('COMENTARIO_REAL -> palabra','COMENTARIO_REAL',1,'p_comentario_real','parser.py',172),
-  ('MOVIMIENTO_OPCIONAL -> token_movimiento','MOVIMIENTO_OPCIONAL',1,'p_movimiento_opcional','parser.py',177),
+  ('S -> METADATA JUGADAS S','S',3,'p_start','parser.py',7),
+  ('S -> METADATA JUGADAS','S',2,'p_start','parser.py',8),
+  ('S -> JUGADAS S','S',2,'p_start','parser.py',9),
+  ('S -> JUGADAS','S',1,'p_start','parser.py',10),
+  ('METADATA -> ITEM_METADATA METADATA','METADATA',2,'p_metadata','parser.py',16),
+  ('METADATA -> ITEM_METADATA','METADATA',1,'p_metadata','parser.py',17),
+  ('ITEM_METADATA -> corchete_abre palabra comilla COMENTARIO_REAL comilla corchete_cierra renglon','ITEM_METADATA',7,'p_item_metadata','parser.py',25),
+  ('JUGADAS -> JUGADA JUGADAS','JUGADAS',2,'p_jugadas','parser.py',29),
+  ('JUGADAS -> MOVIMIENTO_FINAL renglon','JUGADAS',2,'p_jugadas','parser.py',30),
+  ('JUGADAS -> MOVIMIENTO_FINAL','JUGADAS',1,'p_jugadas','parser.py',31),
+  ('MOVIMIENTO_FINAL -> gano_blanco','MOVIMIENTO_FINAL',1,'p_movimiento_final','parser.py',35),
+  ('MOVIMIENTO_FINAL -> gano_negro','MOVIMIENTO_FINAL',1,'p_movimiento_final','parser.py',36),
+  ('MOVIMIENTO_FINAL -> empate','MOVIMIENTO_FINAL',1,'p_movimiento_final','parser.py',37),
+  ('JUGADA -> numero_jugada_blanco MOVIMIENTO J2','JUGADA',3,'p_jugada','parser.py',71),
+  ('JUGADA -> numero_jugada_blanco MOVIMIENTO','JUGADA',2,'p_jugada','parser.py',72),
+  ('J2 -> COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO','J2',4,'p_J2','parser.py',75),
+  ('J2 -> COMENTARIO numero_jugada_negro MOVIMIENTO','J2',3,'p_J2','parser.py',76),
+  ('J2 -> numero_jugada_negro MOVIMIENTO COMENTARIO','J2',3,'p_J2','parser.py',77),
+  ('J2 -> numero_jugada_negro MOVIMIENTO','J2',2,'p_J2','parser.py',78),
+  ('J2 -> MOVIMIENTO COMENTARIO','J2',2,'p_J2','parser.py',79),
+  ('J2 -> MOVIMIENTO','J2',1,'p_J2','parser.py',80),
+  ('J2 -> COMENTARIO','J2',1,'p_J2','parser.py',81),
+  ('MOVIMIENTO -> token_movimiento ESPECIAL','MOVIMIENTO',2,'p_movimiento','parser.py',133),
+  ('MOVIMIENTO -> enroque_1 ESPECIAL','MOVIMIENTO',2,'p_movimiento','parser.py',134),
+  ('MOVIMIENTO -> enroque_2 ESPECIAL','MOVIMIENTO',2,'p_movimiento','parser.py',135),
+  ('MOVIMIENTO -> token_movimiento','MOVIMIENTO',1,'p_movimiento','parser.py',136),
+  ('MOVIMIENTO -> enroque_1','MOVIMIENTO',1,'p_movimiento','parser.py',137),
+  ('MOVIMIENTO -> enroque_2','MOVIMIENTO',1,'p_movimiento','parser.py',138),
+  ('ESPECIAL -> jaque_mate','ESPECIAL',1,'p_especial','parser.py',156),
+  ('ESPECIAL -> jaque','ESPECIAL',1,'p_especial','parser.py',157),
+  ('COMENTARIO -> llave_abre COM llave_cierra','COMENTARIO',3,'p_comentario','parser.py',165),
+  ('COMENTARIO -> parentecis_abre COM parentecis_cierra','COMENTARIO',3,'p_comentario','parser.py',166),
+  ('COMENTARIO -> llave_abre llave_cierra','COMENTARIO',2,'p_comentario','parser.py',167),
+  ('COMENTARIO -> parentecis_abre parentecis_cierra','COMENTARIO',2,'p_comentario','parser.py',168),
+  ('COM -> palabra COM','COM',2,'p_com','parser.py',172),
+  ('COM -> MOVIMIENTO_OPCIONAL COM','COM',2,'p_com','parser.py',173),
+  ('COM -> COMENTARIO COM','COM',2,'p_com','parser.py',174),
+  ('COM -> espacio COM','COM',2,'p_com','parser.py',175),
+  ('COM -> palabra','COM',1,'p_com','parser.py',176),
+  ('COM -> MOVIMIENTO_OPCIONAL','COM',1,'p_com','parser.py',177),
+  ('COM -> COMENTARIO','COM',1,'p_com','parser.py',178),
+  ('COM -> espacio','COM',1,'p_com','parser.py',179),
+  ('COMENTARIO_REAL -> palabra espacio COMENTARIO_REAL','COMENTARIO_REAL',3,'p_comentario_real','parser.py',183),
+  ('COMENTARIO_REAL -> palabra','COMENTARIO_REAL',1,'p_comentario_real','parser.py',184),
+  ('MOVIMIENTO_OPCIONAL -> token_movimiento','MOVIMIENTO_OPCIONAL',1,'p_movimiento_opcional','parser.py',189),
 ]

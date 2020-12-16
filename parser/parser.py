@@ -4,7 +4,9 @@ import ply.yacc as yacc
 from tokenizer import tokens
 
 def p_start(p):
-    '''S    :   METADATA JUGADAS
+    '''S    :   METADATA JUGADAS S
+            |   METADATA JUGADAS
+            |   JUGADAS S
             |   JUGADAS'''
 
     # p[0] = "Parseado S"
@@ -20,12 +22,13 @@ def p_metadata(p):
 #     print("ERROR EN METADATA: ", p)
 
 def p_item_metadata(p):
-    'ITEM_METADATA  :   corchete_abre palabra espacio comilla COMENTARIO_REAL comilla corchete_cierra renglon'
+    'ITEM_METADATA  :   corchete_abre palabra comilla COMENTARIO_REAL comilla corchete_cierra renglon'
     pass
 
 def p_jugadas(p):
     '''JUGADAS  : JUGADA JUGADAS
-                | MOVIMIENTO_FINAL'''
+                | MOVIMIENTO_FINAL renglon
+                | MOVIMIENTO_FINAL '''
     
 
 def p_movimiento_final(p):
@@ -55,15 +58,27 @@ def p_movimiento_final(p):
 #                 |   numero_jugada_blanco espacio MOVIMIENTO espacio'''
 #     pass
 
+# def p_jugada(p):
+#     '''JUGADA   :   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio
+#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio
+#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio
+#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio
+#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio MOVIMIENTO espacio
+#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio
+#                 |   numero_jugada_blanco espacio MOVIMIENTO espacio'''
+
 def p_jugada(p):
-    '''JUGADA   :   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio
-                |   numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio
-                |   numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio
-                |   numero_jugada_blanco espacio MOVIMIENTO espacio MOVIMIENTO espacio
-                |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio
-                |   numero_jugada_blanco espacio MOVIMIENTO espacio
-                |   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio'''
-    pass
+    '''JUGADA   :   numero_jugada_blanco MOVIMIENTO J2
+                |   numero_jugada_blanco MOVIMIENTO'''
+
+def p_J2(p):
+    '''J2       :   COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO
+                |   COMENTARIO numero_jugada_negro MOVIMIENTO 
+                |   numero_jugada_negro MOVIMIENTO COMENTARIO 
+                |   numero_jugada_negro MOVIMIENTO 
+                |   MOVIMIENTO COMENTARIO
+                |   MOVIMIENTO
+                |   COMENTARIO'''
 
 # def p_JugadaCont2(p):
 #     '''J2   :    espacio MOVIMIENTO J3
