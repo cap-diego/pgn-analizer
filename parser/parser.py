@@ -22,7 +22,7 @@ def p_metadata(p):
 #     print("ERROR EN METADATA: ", p)
 
 def p_item_metadata(p):
-    'ITEM_METADATA  :   corchete_abre palabra comilla COMENTARIO_REAL comilla corchete_cierra renglon'
+    'ITEM_METADATA  :   corchete_abre palabra espacio comilla COMENTARIO_REAL comilla corchete_cierra renglon'
     pass
 
 def p_jugadas(p):
@@ -203,6 +203,8 @@ def p_movimiento_opcional(p):
 #     'lambda :'
 #     pass
 
+class LexerError(BaseException): pass
+
 # Error rule for syntax errors
 def p_error(p):
     # p[0].valid = False
@@ -210,6 +212,7 @@ def p_error(p):
         print("EOF!!!")
     else:
         print("TOKEN QUE CAUSO EL ERROR: ", p)
+        raise LexerError("Input invalido")
 
 # Build the parser
 parser = yacc.yacc(debug=True)
@@ -218,7 +221,10 @@ if __name__ == '__main__':
 
     f = open("testeo.txt", "r")
     s = f.read()
-    # print(s)
     print("Parseando . . .")
-    result = parser.parse(s)
-    print(result)
+    try:
+        result = parser.parse(s)
+    except LexerError as err:
+        print(err)
+    else:
+        print("OK")

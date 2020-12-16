@@ -91,8 +91,8 @@ def t_renglon(t):
 def t_comilla(t):
     r'\"'
     # import pdb; pdb.set_trace()
-    global en_metadata
-    en_metadata = not en_metadata
+    # global en_metadata
+    # en_metadata = not en_metadata
     return t
 
 def t_corchete_abre(t):
@@ -100,10 +100,15 @@ def t_corchete_abre(t):
     # import pdb; pdb.set_trace()
     global leer_renglones
     leer_renglones = True
+
+    global en_metadata
+    en_metadata = not en_metadata
     return t
 
 def t_corchete_cierra(t):
     r'\]'
+    global en_metadata
+    en_metadata = not en_metadata
     return t
 
 def t_llave_abre(t):
