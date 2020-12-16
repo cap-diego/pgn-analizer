@@ -1,4 +1,10 @@
 [asdasdasd "adasdasd asasas"]
 [asasd "sssss"]
 [asdasdasd "adasdasd"]
-1. e4 e5 2. Nf3 Nf6 3. Bc4 {Una jugada muy fuerte, el negro abandono} 1-0
+1. e4 e5 2. Nf3 Nf6 
+
+
+
+
+
+3. Bc4 {Una jugada muy fuerte, el negro abandono} 1-0

@@ -7,6 +7,8 @@
 import ply.lex as lex
 import re
 
+leer_renglones = True
+
 # List of token names.   This is always required
 tokens = (
 'enroque_1',
@@ -70,12 +72,15 @@ def t_espacio(t):
     r'[^\S\n\t]'
     # import pdb;pdb.set_trace()
     return t
-    
+
 # Define a rule so we can track line numbers
 def t_renglon(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-    return t
+    # import pdb; pdb.set_trace()
+    global leer_renglones
+    if leer_renglones:
+        return t
 
 def t_comilla(t):
     r'\"'
@@ -108,17 +113,21 @@ def t_parentecis_cierra(t):
 
 def t_palabra(t):
     r'[^(\s|\"|\]|\[|\{|\})]+'
-
+    global leer_renglones
     # Matchea con todo lo que no esté separado por espacios
     # Hay que re tokenizar todos los valores a mano
     
     # Numero de jugada del jugador negro
     if re.search(r'\d+\.\.\.', t.value) and len(t.value.split("...")) == 2 and t.value.split("...")[1] == '':
         t.type = 'numero_jugada_negro'
-    
+        # import pdb; pdb.set_trace()
+        leer_renglones = False
+        
     # Numero de jugada del jugador blanco
     elif re.search(r'\d+\.', t.value) and len(t.value.split(".")) == 2 and t.value.split(".")[1] == '':
         t.type = 'numero_jugada_blanco'
+        # import pdb; pdb.set_trace()
+        leer_renglones = False
 
     # Movimientos 
     elif re.search(r'[PNBRQK]?[a-h]?[1-8]?x?[PNBRQK]?[a-h][1-8]', t.value):

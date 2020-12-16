@@ -55,9 +55,6 @@ def p_movimiento_final(p):
 #                 |   numero_jugada_blanco espacio MOVIMIENTO espacio'''
 #     pass
 
-# (11) JUGADA -> numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio . numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio
-# (16) JUGADA -> numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio . numero_jugada_negro espacio MOVIMIENTO espacio
-
 def p_jugada(p):
     '''JUGADA   :   numero_jugada_blanco espacio MOVIMIENTO espacio COMENTARIO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio
                 |   numero_jugada_blanco espacio MOVIMIENTO espacio numero_jugada_negro espacio MOVIMIENTO espacio COMENTARIO espacio
