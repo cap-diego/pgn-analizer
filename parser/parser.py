@@ -6,6 +6,8 @@ from tokenizer import tokens
 # Definicion de atributos 
 movimiento_tiene_captura = False
 cantidad_capturas = 0
+capturas_por_partida = []
+capturas_texto_por_partida = []
 captura_texto = ""
 ultima_jugada = 0
 
@@ -16,36 +18,59 @@ def p_start(p):
 
     global cantidad_capturas  
     global captura_texto
+    global capturas_por_partida
+    global capturas_texto_por_partida
+
     cantidad_capturas += p[0]['cantidad_capturas']
     captura_texto += p[0]['captura_texto'].replace("  ", "")
+    capturas_por_partida.append(p[0]['cantidad_capturas'])
+    capturas_texto_por_partida.append("[" + p[0]['captura_texto'].replace("  ", "") + "]")
 
 
 def p_start_2(p):
     '''S    :   METADATA JUGADAS'''
     p[0] = {'cantidad_capturas': p[2]['cantidad_capturas']}
     p[0]['captura_texto'] = p[2]['captura_texto']
+
     global cantidad_capturas
     global captura_texto
+    global capturas_por_partida
+    global capturas_texto_por_partida
+
     cantidad_capturas += p[0]['cantidad_capturas']
-    captura_texto += p[0]['captura_texto'] 
+    captura_texto += p[0]['captura_texto']
+    capturas_por_partida.append(p[0]['cantidad_capturas'])
+    capturas_texto_por_partida.append("[" + p[0]['captura_texto'].replace("  ", "") + "]")
 
 def p_start_jugadas(p):
-    '''S : JUGADAS'''
+    '''S    :   JUGADAS'''
     p[0] = {'cantidad_capturas': p[1]['cantidad_capturas']}
     p[0]['captura_texto'] = p[1]['captura_texto']
+    
     global cantidad_capturas  
     global captura_texto
+    global capturas_por_partida
+    global capturas_texto_por_partida
+
     cantidad_capturas += p[0]['cantidad_capturas']
     captura_texto += p[0]['captura_texto'] 
+    capturas_por_partida.append(p[0]['cantidad_capturas'])
+    capturas_texto_por_partida.append("[" + p[0]['captura_texto'].replace("  ", "") + "]")
 
 def p_start_jugadas_s(p):
-    '''S : JUGADAS S'''
+    '''S    :   JUGADAS S'''
     p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + p[2]['cantidad_capturas']}
     p[0]['captura_texto'] = p[1]['captura_texto'] + " " + p[2]["captura_texto"]
+    
     global cantidad_capturas  
     global captura_texto
+    global capturas_por_partida
+    global capturas_texto_por_partida
+
     cantidad_capturas += p[0]['cantidad_capturas']
-    captura_texto += p[0]['captura_texto'] 
+    captura_texto += p[0]['captura_texto']
+    capturas_por_partida.append(p[0]['cantidad_capturas'])
+    capturas_texto_por_partida.append("[" + p[0]['captura_texto'].replace("  ", "") + "]")
     
 def p_metadata(p):
     '''METADATA : ITEM_METADATA METADATA
@@ -74,11 +99,9 @@ def p_movimiento_final(p):
                         |   empate'''
     global ultima_jugada
     ultima_jugada = 0
-    print("TERMINO PARTIDA")
     
 def p_jugada(p):
     '''JUGADA   :   numero_jugada_blanco MOVIMIENTO J2'''
-    print("Numero de jugada {}".format(p[1]))
     numero_jugada = int(p[1].split(".")[0])
     global ultima_jugada
     if numero_jugada != ultima_jugada + 1:
@@ -94,20 +117,22 @@ def p_jugada(p):
     if p[3]['cantidad_capturas'] > 0:
         p[0]['captura_texto'] += ("" if p[2]['tiene_captura'] else p[1] + " ") + p[3]['captura_texto'] + " "
     
-    p[0]['captura_texto'] += "-->" if p[2]['tiene_captura'] or p[3]['cantidad_capturas'] > 0 else ""
+    p[0]['captura_texto'] += "," if p[2]['tiene_captura'] or p[3]['cantidad_capturas'] > 0 else ""
 
 def p_jugada_2(p): 
     '''JUGADA   :   numero_jugada_blanco MOVIMIENTO'''
     numero_jugada = int(p[1].split(".")[0])
+
     global ultima_jugada
     if numero_jugada != ultima_jugada + 1:
         raise LexerError("Número de Jugada invalido: llegó {} y se esperaba {}".format(numero_jugada, ultima_jugada + 1))
+    
     ultima_jugada += 1
-    print("Numero de jugada2 {}".format(p[1]))
+    
     p[0] = {'cantidad_capturas': p[2]['tiene_captura']}
     p[0]['captura_texto'] = ""
     if p[0]['cantidad_capturas'] > 0:
-        p[0]['captura_texto'] = p[1] + p[2]['captura_texto'] + "-->"
+        p[0]['captura_texto'] = p[1] + p[2]['captura_texto'] + ","
 
 def p_J2(p):
     '''J2   :   COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO'''
@@ -253,7 +278,10 @@ if __name__ == '__main__':
         print(err)
     else:
         print("OK")
-        print("Cantidad de capturas {}".format(cantidad_capturas))
-        print("Capturas: {}".format(captura_texto))
+        capturas_por_partida.reverse()
+        capturas_texto_por_partida.reverse()
+        print("Cantidad de capturas por partida: ", capturas_por_partida)
+        print("Capturas por partida: ", capturas_texto_por_partida)
+        # print("Capturas: {}".format(captura_texto))
     
     f.close()

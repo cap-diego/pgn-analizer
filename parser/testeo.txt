@@ -25,6 +25,6 @@ difficult to have foreseen, forms the kernel of an apparently simple Alekhine
 combination.} 20... Qg7 {After 20.Qe7 21.Qa5+ b6 22.Qc3 would follow.} 21.
 Nd6 Nb6 22. Ne8 Qf7 {White mates in three moves.} 23. Qd6+ 1-0
 
-1. e4 {acá un comentario {y otro que dice que es la más común,
+1. xe4 {acá un comentario {y otro que dice que es la más común,
 a diferencia de la poco usual e3 {que es mala} y la respuesta
 e5 es muy común} } 1-0
