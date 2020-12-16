@@ -15,7 +15,7 @@ def p_start(p):
     global cantidad_capturas  
     global captura_texto
     cantidad_capturas += p[0]['cantidad_capturas']
-    captura_texto += p[0]['captura_texto'] 
+    captura_texto += p[0]['captura_texto'].replace("  ", "")
 
 def p_start_2(p):
     '''S    :   METADATA JUGADAS'''
@@ -75,20 +75,22 @@ def p_jugada(p):
     p[0]['captura_texto'] = ""
     
     if p[2]['tiene_captura']:
-        p[0]['captura_texto'] += p[1] + p[2]['captura_texto'] + "; "
+        p[0]['captura_texto'] += p[1] + " " + p[2]['captura_texto'] + " "
     if p[3]['cantidad_capturas'] > 0:
-        p[0]['captura_texto'] += p[3]['captura_texto'] + "; "
+        p[0]['captura_texto'] += ("" if p[2]['tiene_captura'] else p[1] + " ") + p[3]['captura_texto'] + " "
+    
+    p[0]['captura_texto'] += "-->" if p[2]['tiene_captura'] or p[3]['cantidad_capturas'] > 0 else ""
 
 def p_jugada_(p): 
     '''JUGADA   :   numero_jugada_blanco MOVIMIENTO'''
-    p[0] = {'tiene_captura': p[2]['tiene_captura']}
+    p[0] = {'cantidad_capturas': p[2]['tiene_captura']}
     p[0]['captura_texto'] = ""
-    if p[0]['tiene_captura']:
-        p[0]['captura_texto'] = p[1] + p[2]['captura_texto'] + "; "
+    if p[0]['cantidad_capturas'] > 0:
+        p[0]['captura_texto'] = p[1] + p[2]['captura_texto'] + "-->"
 
 def p_J2(p):
     '''J2   :   COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO'''
-    p[0] = {p[1]['cantidad_capturas'] + p[3]['tiene_captura'] + p[4]['cantidad_capturas']}
+    p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + p[3]['tiene_captura'] + p[4]['cantidad_capturas']}
     p[0]['captura_texto'] = p[1]['captura_texto'] + " " + p[3]['captura_texto'] + " " + p[4]['captura_texto']
     
 def p_J22(p):
