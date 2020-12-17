@@ -1,3 +1,16 @@
+<style type="text/css">
+
+table {
+  width: calc(100% - 20px);
+  margin: 30px 10px;
+  font-family: monospace;
+}
+
+code {
+  text-align: left;
+}
+
+</style>
 <div style="text-align: justify">
 
 # Trabajo práctico Teoría de Lenguajes
@@ -15,7 +28,7 @@ Para este trabajo creamos un programa que permita reconocer archivos PGN, vamos 
 
 Estos archivos representan partidas de ajedrez mediante una sintaxis bastante flexible, pueden describir cualquier tipo de partida, permitiendo comentarios sobre las mismas y abreviaturas para las jugadas más comunes.
 
-Los archivos de este formato están compuestos por una cantidad de partidas, las cuales están compuestas por metadatos opcionales y las jugadas. 
+Los archivos de este formato están compuestos por una cantidad de partidas, las cuales están compuestas por metadatos opcionales y las jugadas.
 
 ### **Objetivo del trabajo**
 
@@ -134,19 +147,6 @@ MOVIMIENTO_FINAL → gano_blanco
 ```
 
 ## **Tabla de atributos**
-<style>
-
-table {
-  width: calc(100% - 20px);
-  margin: 30px 10px;
-  font-family: monospace;
-}
-
-code {
-  text-align: left;
-}
-
-</style>
 
 | Atributo                              | Heredado / Sintetizado | Tipo      |
 | ------------------------------------- | ---------------------- | --------- |
