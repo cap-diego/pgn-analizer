@@ -446,81 +446,50 @@ COM → espacio
 
 ## **Desarrollo**
 
-Como mencionamos anteriormente utilizamos PLY y YACC para construir nuestro programa, estas herramientas requerían que programemos un Lexer y un Parser para poder reconocer nuestro lenguaje. Debido a como funcionan esas herramientas el código que parsea las reglas de los atributos no es una copia 1:1 con las escritas anteriormente, esto se explicará mejor en la sección del Parser. También como las herramientas están pensadas para generar parsers LR nuestra gramática fué afectada, tuvimos que eliminar todas las producciones lambda de la misma para evitar problemas en las tablas LALR.
+Como mencionamos anteriormente utilizamos PLY y YACC para construir nuestro programa, estas herramientas requerían que programemos un Lexer y un Parser para poder reconocer nuestro lenguaje. Debido a como funcionan esas herramientas el código que parsea las reglas de los atributos no es una copia 1:1 con las escritas anteriormente, esto se explicará mejor en la sección del Parser.
 
-### **Lexer en Python**
-TODO
+### **Lexer**
 
-### **Parser en Python**
-TODO
+Para que un parser pueda reconocer un texto, se tienen que convertir los characteres del texto en **tokens**, estos tokes son los que el parser leerá y mapeará a las producciones de nuestra gramática.
+
+La forma en la que PLY maneja los tokens es mediante **reglas**, éstas corresponden con funciones de python (o strings) que contendrán una expresión regular que indica como reconocer el token junto con código en caso de necesitarlo.
+
+PLY tiene un orden en el cual los tokens son revisados, esto es importante a la hora de definirlos, el orden es el siguiente:
+
+- Los tokens que sean funciones se revisan primero y en el orden de definición
+- Los tokens que sean strings se revisan en orden que que tan larga sea la expresión regular que utilizan
+
+La mayoría de las reglas se pueden entender fácilmente al leer sus expresiones regulares y/ó código pero la regla de palabra es más compleja y la explicaremos a continuación:
+
+#### **palabra**
+
+Este token se utiliza cuando se quiere reconocer una palabra cualquiera, es principalmente usado en la metadada y en los comentarios. La expresión regular que reconoce a una palabra es `[^(\s|\"|\]|\[|\{|\})]+` y reconoce a todos los caracteres que no sean ", [, ], {, } o whitespaces. 
+
+Ésta expresión regular es muy ámplia y reconoce a otras combinaciones de caracteres que nos interesa reconocer como otros tokens, incluso al reacomodar las reglas de PLY. Nuestra solución a éste problema fue recalcular el valor como otro token si la palabra reconocida encajaba con alguna de las expresiones regulares que nos interesa separar de la misma.
+
+A la vez si la palabra se encuentra en un comentario algunos valores no son recalculados ya que no importan en ese contexto. Para revisar si un token palabra está en un comentario se utilizan variables que se modifican en los tokens de las llaves y los paréntesis.
+
+### **Parser**
+
+Una vez tokenizado el archivo a leer el parser toma los tokens e intenta reconocer el lenguaje en base a la gramática que definimos. YACC permite escribir funciones que representen las producciones de la gramática y utilizar código para representar las reglas de la misma. Las funciones contienen un comentario al principio que YACC lee para identificar la gramatica, no es necesario que las funciones tengan el mismo nombre que el no terminal de las producciones que representan. 
+
+Los atributos sintetizados son programados mediante el parametro de entrada de las funciones `p`, ésta variable contiene un arreglo que representa a los elementos de la producción, en los no terminales utilizamos diccionarios de python cuyas claves coinciden con los atributos de la gramática y los guardamos en la posición correspondiente, y para los terminales se utiliza su valor directamente (si p[i] es terminal YACC le asigna el string que lo representa y si es un no terminal el calculo que su valor queda en el programador). 
+
+YACC no soporta utilizar el arreglo `p` para calcular atributos heredados, por lo que tuvimos que resolverlo mediante el uso de variables globales. Esto nos permitió calcularlos correctamente pero no se pudo realizar de una forma que sea exactamente igual a como se escribieron en la gramática.
 
 ### **Ejecuciones de prueba**
-TODO
+
+En ésta sección mostraremos los resultados de ejecutar algunos archivos en nuestro programa.
+
+#### **Casos válidos**
+
+#### **Casos no válidos**
 
 ## **Conclusión**
 Para llegar a un parser funcional tuvimos que hacer un proceso iterativo incremental bastante amplio entre la implementación y la gramática, las limitaciones de la librería no nos permitieron programar la gramática de una forma tan libre como las definimos en clase y tuvimos que reformularla.
 
 A pesar de esto, en relativamente poco tiempo logramos desarrollar un parser de un lenguaje bastante complejo que calculaba todos los datos pedidos, eso demuestra la gran capacidad de los parsers autogenerados, aunque falta mucho desarrollo sobre las herramientas como PLY para que sean realmente útiles en la práctica.
 
-El proyecto quedó con muchas producciones y por lo tanto muy largo debido a la simplificación que tuvimos que hacer para poder utilizar la libería, esto puede generar confusión especialmente en proyectos de mayor embergadura, 
-
-<!-- 
-| hola | aur  | fssf |
-| ---- | ---- | ---- |
-| chau | fssf | 12   |
--->
-
-<!-- 
-S   ->  METADATA JUGADAS S
-S   ->  METADATA JUGADAS
-S   ->  JUGADAS S
-S   ->  JUGADAS
-
-METADATA    ->  ITEM_METADATA METADATA
-METADATA    ->  ITEM_METADATA
-
-ITEM_METADATA   ->  corchete_abre palabra espacio comilla COMENTARIO_REAL comilla corchete_cierra renglon
-
-COMENTARIO_REAL ->  palabra espacio COMENTARIO_REAL
-COMENTARIO_REAL ->  palabra
-
-JUGADAS ->  JUGADA JUGADAS
-JUGADAS ->  MOVIMIENTO_FINAL renglon
-JUGADAS ->  MOVIMIENTO_FINAL
-
-MOVIMIENTO_FINAL    ->  gano_blanco
-MOVIMIENTO_FINAL    ->  gano_negro
-MOVIMIENTO_FINAL    ->  empate
-
-JUGADA  ->  numero_jugada_blanco MOVIMIENTO J2
-JUGADA  ->  numero_jugada_blanco MOVIMIENTO
-
-J2  ->  COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO
-J2  ->  numero_jugada_negro MOVIMIENTO COMENTARIO
-J2  ->  numero_jugada_negro MOVIMIENTO
-J2  ->  MOVIMIENTO COMENTARIO
-J2  ->  COMENTARIO
-J2  ->  MOVIMIENTO
-
-MOVIMIENTO  ->  token_movimiento ESPECIAL
-MOVIMIENTO  ->  token_movimiento
-
-ESPECIAL    ->  jaque_mate
-ESPECIAL    ->  jaque
-
-COMENTARIO  ->  llave_abre  COM llave_cierra
-COMENTARIO  ->  parentecis_abre COM parentecis_cierra
-COMENTARIO  ->  llave_abre llave_cierra
-COMENTARIO  ->  parentecis_abre parentecis_cierra
-
-COM ->  MOVIMIENTO_OPCIONAL COM
-COM ->  COMENTARIO COM
-COM ->  palabra COM
-COM ->  espacio COM
-COM ->  MOVIMIENTO_OPCIONAL
-COM ->  COMENTARIO
-COM ->  palabra
-COM ->  espacio
--->
+El proyecto quedó con muchas producciones y por lo tanto muy largo debido a la simplificación que tuvimos que hacer para poder utilizar la libería, esto puede generar confusión especialmente en proyectos de mayor embergadura y nos limita mucho. 
 
 </div>

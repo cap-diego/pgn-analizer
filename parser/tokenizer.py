@@ -6,12 +6,13 @@
 # ------------------------------------------------------------
 import ply.lex as lex
 import re
+import sys
 
-leer_renglones = True
-en_metadata = False
-en_comentario = 0
+leer_renglones = True   # Indica al lexer si tiene que tokenizar los \n
+en_metadata = False     # Indica al lexer si está en la sección metadata
+en_comentario = 0       # Indica al lexer si está en un comentrario
 
-# List of token names.   This is always required
+# Lista de tokens
 tokens = (
 'enroque_1',
 'enroque_2',
@@ -25,59 +26,41 @@ tokens = (
 'parentecis_abre',
 'parentecis_cierra',
 'comilla',
-#'punto',
 'jaque',
 'jaque_mate',
-#'pieza',
-#'columna',
-#'fila',
 'palabra',
-#'numero',
 'numero_jugada_negro',
 'numero_jugada_blanco',
-#'equis',
 'espacio',
 'token_movimiento',
 'renglon'
 )
 
-# precedence = (
-#     ('left', '', '')
-# )
-
-# Regular expression rules for simple tokens
+# Reglas para tokens simples 
 t_jaque  = r'\+'
 t_jaque_mate  = r'\#'
 
-
+# Reglas más complejas para ciertos tokens
 def t_espacio(t):
     r'[^\S\n\t]'
-    # import pdb;pdb.set_trace()
     global en_metadata
     global en_comentario
-
     if en_metadata or en_comentario > 0:
         return t
 
-# Define a rule so we can track line numbers
 def t_renglon(t):
     r'\n+'
-    t.lexer.lineno += len(t.value)
-    # import pdb; pdb.set_trace()
+    t.lexer.lineno += len(t.value) # Actualizar el contador de líneas del lexer
     global leer_renglones
     if leer_renglones:
         return t
 
 def t_comilla(t):
     r'\"'
-    # import pdb; pdb.set_trace()
-    # global en_metadata
-    # en_metadata = not en_metadata
     return t
 
 def t_corchete_abre(t):
     r'\['
-    # import pdb; pdb.set_trace()
     global leer_renglones
     leer_renglones = True
 
@@ -119,8 +102,9 @@ def t_palabra(t):
     r'[^(\s|\"|\]|\[|\{|\})]+'
     global leer_renglones
     global en_metadata
+
     # Matchea con todo lo que no esté separado por espacios
-    # Hay que re tokenizar todos los valores a mano
+    # Hay que re tokenizar todos los valores que no sean palabras a mano
 
     if en_metadata:
         return t
@@ -155,6 +139,7 @@ def t_palabra(t):
         t.type = 'empate'
         leer_renglones = True
 
+    # Enroques
     elif not en_comentario and re.search(r'O-O-O', t.value):
         t.type = 'enroque_1'
 
@@ -163,28 +148,23 @@ def t_palabra(t):
 
     return t
 
-# A string containing ignored characters (spaces and tabs)
+# Caracteres a ignorar
 t_ignore  = '\t'
 
-# Error handling rule
+# Regla para manejar errores
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-# Build the lexer
+# Creamos el lexer
 lexer = lex.lex()
 
-if __name__ == '__main__':
-    # Test it out
-    data = '''
-    [PlyCount "45"]
-    1. e4 {Notes by Richard Reti} 1... e6 
-    '''
-
-    # Give the lexer some input
-    # lexer.input(data)
-
-    f = open("testeo.txt", "r")
+def correr_lexer():
+    if(len(sys.argv) != 2):
+        print("ERROR - EL PROGRAMA SOLO TOMA UN ARGUMENTO")
+        return
+    
+    f = open(sys.argv[1], "r")
     s = f.read()
     lexer.input(s)
     # Tokenize
@@ -193,3 +173,6 @@ if __name__ == '__main__':
         if not tok: 
             break      # No more input
         print(tok)
+
+if __name__ == '__main__':
+    correr_lexer()

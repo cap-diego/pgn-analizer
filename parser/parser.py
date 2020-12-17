@@ -1,16 +1,17 @@
 import ply.yacc as yacc
+import sys
 
-# Get the token map from the lexer.  This is required.
+# Importar mapa de tokens del lexer.
 from tokenizer import tokens
 
 # Definicion de atributos 
 movimiento_tiene_captura = False
-cantidad_capturas = 0
-capturas_por_partida = []
-capturas_texto_por_partida = []
-captura_texto = ""
-ultima_jugada = 0
-ganadores = []
+cantidad_capturas = 0 # Cantidad de capturas totales
+capturas_por_partida = [] # Cada elemento representa la cantidad de capturas de una partida
+capturas_texto_por_partida = [] # Cada elementeo representa las capturas realizadas en la partida en forma de texto
+captura_texto = "" # Captura en forma de texto todas las capturas de una partida
+ultima_jugada = 0 # Contador para verificar que las partidas estén numeradas correctamente
+ganadores = [] # Arreglo con los resultados de cada partida
 
 def p_start(p):
     '''S    :   METADATA JUGADAS S'''
@@ -98,10 +99,12 @@ def p_movimiento_final(p):
     '''MOVIMIENTO_FINAL :   gano_blanco
                         |   gano_negro
                         |   empate'''
+    # Llegamos al final de la partida, reseteamos los indices de la jugada
     global ultima_jugada
     ultima_jugada = 0
-    global ganadores
     
+    # Guardamos al ganaror
+    global ganadores
     ganador = "blanco" if p[1] == "1-0" else "negro" if p[1] == "0-1" else "empate"
     ganadores.append(ganador)
     
@@ -271,23 +274,18 @@ def p_com4(p):
     val2 = "" if len(p) <= 2 else  p[2]['captura_texto']
     p[0]['captura_texto'] = p[1]['captura_texto'] + " " + val2
 
-# def p_movimiento_opcional(p):
-#     '''MOVIMIENTO_OPCIONAL  :   token_movimiento'''
-#     p[0] = {'cantidad_capturas': 1 if "x" in str(p[1]).lower() else 0}
-#     p[0]['captura_texto'] = p[1] if "x" in str(p[1]).lower() else ""
-    
-
 def p_comentario_real(p):
     '''COMENTARIO_REAL      :   palabra espacio COMENTARIO_REAL
                             |   palabra'''
 
+# Clase para mostrar errores
 class LexerError(BaseException): pass
 
 # Error rule for syntax errors
 def p_error(p):
     # p[0].valid = False
     if p is None:
-        print("EOF!!!")
+        print("Llegó a EOF")
     else:
         print("TOKEN QUE CAUSO EL ERROR: ", p)
         raise LexerError("Input invalido")
@@ -295,8 +293,14 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc(debug=True)
 
-if __name__ == '__main__':
-    f = open("testeo.txt", "r")
+# Codigo para leer los archivos de input
+def programa_principal():
+    if(len(sys.argv) != 2):
+        print("ERROR - EL PROGRAMA SOLO TOMA UN ARGUMENTO")
+        return
+    
+    f = open(sys.argv[1], "r")
+
     s = f.read()
     print("Parseando . . .")
     try:
@@ -304,13 +308,22 @@ if __name__ == '__main__':
     except LexerError as err:
         print(err)
     else:
-        print("OK")
+        print("Lectura Finalizada")
+        
+        # Invierto los arreglos con los datos ya que se forman al revés
         capturas_por_partida.reverse()
         capturas_texto_por_partida.reverse()
+        
         print("Cantidad de capturas por partida: ", capturas_por_partida)
-        print("Capturas por partida: ", capturas_texto_por_partida)
+        
+        print("Capturas por partida: ")
+        for i in range(len(capturas_texto_por_partida)):
+            print("Partida {}: {}".format(i+1, capturas_texto_por_partida[i]))
+        
         print("Cantidad de capturas totales: ", sum(capturas_por_partida))
         print("Ganadores: ", ganadores)
-        # print("Capturas: {}".format(captura_texto))
     
     f.close()
+
+if __name__ == '__main__':
+    programa_principal()
