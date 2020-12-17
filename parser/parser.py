@@ -279,7 +279,7 @@ def p_movimiento_opcional(p):
 
 def p_comentario_real(p):
     '''COMENTARIO_REAL      :   palabra espacio COMENTARIO_REAL
-                            |   palabra '''
+                            |   palabra'''
 
 class LexerError(BaseException): pass
 

@@ -8,6 +8,8 @@ S   ->  JUGADAS
 METADATA    ->  ITEM_METADATA METADATA
 METADATA    ->  ITEM_METADATA
 
+ITEM_METADATA   ->  corchete_abre palabra espacio comilla COMENTARIO_REAL comilla corchete_cierra renglon
+
 JUGADAS ->  JUGADA JUGADAS
 JUGADAS ->  MOVIMIENTO_FINAL renglon
 JUGADAS ->  MOVIMIENTO_FINAL
@@ -25,3 +27,27 @@ J2  ->  numero_jugada_negro MOVIMIENTO
 J2  ->  MOVIMIENTO COMENTARIO
 J2  ->  COMENTARIO
 J2  ->  MOVIMIENTO
+
+MOVIMIENTO  ->  token_movimiento ESPECIAL
+MOVIMIENTO  ->  token_movimiento
+
+ESPECIAL    ->  jaque_mate
+ESPECIAL    ->  jaque
+
+COMENTARIO  ->  llave_abre  COM llave_cierra
+COMENTARIO  ->  parentecis_abre COM parentecis_cierra
+COMENTARIO  ->  llave_abre llave_cierra
+COMENTARIO  ->  parentecis_abre parentecis_cierra
+
+COM ->  MOVIMIENTO_OPCIONAL COM
+COM ->  COMENTARIO COM
+COM ->  palabra COM
+COM ->  espacio COM
+COM ->  MOVIMIENTO_OPCIONAL
+COM ->  COMENTARIO
+COM ->  palabra
+COM ->  espacio
+
+COMENTARIO_REAL ->  palabra espacio COMENTARIO_REAL
+COMENTARIO_REAL ->  palabra
+
