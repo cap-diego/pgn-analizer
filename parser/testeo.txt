@@ -23,8 +23,12 @@ threatened and after 17...Qd6 18 Bxe4 dxe4 19 Rxe4 and 20 Qg7 wins.} 18. Bxe4
 dxe4 19. Nxe4 Rg8 20. Qa3 {Here, as so often happens, a surprising move and one
 difficult to have foreseen, forms the kernel of an apparently simple Alekhine
 combination.} 20... Qg7 {After 20.Qe7 21.Qa5+ b6 22.Qc3 would follow.} 21.
-Nd6 Nb6 22. Ne8 Qf7 {White mates in three moves.} 23. Qd6+ 1-0
+Nd6 Nb6 22. Ne8 Qf7 {White mates in three moves.} 23. Qd6+ 0-1
 
-1. xe4 {acá un comentario {y otro que dice que es la más común,
-a diferencia de la poco usual e3 {que es mala} y la respuesta
-e5 es muy común} } 1-0
+1. e4 {acá un comentario {y otro que dice que es la más común,
+a diferencia de la poco usual e3 {que es mala (a diferencia de h5) } y la respuesta
+e5 es muy común} } 1... e4 1-0
+
+[Evento "Grand Prix"]
+
+1. Nf3 Nf6 2. O-O e2 3. O-O-O 1/2-1/2 

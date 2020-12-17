@@ -1,0 +1,27 @@
+Gramática
+
+S   ->  METADATA JUGADAS S
+S   ->  METADATA JUGADAS
+S   ->  JUGADAS S
+S   ->  JUGADAS
+
+METADATA    ->  ITEM_METADATA METADATA
+METADATA    ->  ITEM_METADATA
+
+JUGADAS ->  JUGADA JUGADAS
+JUGADAS ->  MOVIMIENTO_FINAL renglon
+JUGADAS ->  MOVIMIENTO_FINAL
+
+MOVIMIENTO_FINAL    ->  gano_blanco
+MOVIMIENTO_FINAL    ->  gano_negro
+MOVIMIENTO_FINAL    ->  empate
+
+JUGADA  ->  numero_jugada_blanco MOVIMIENTO J2
+JUGADA  ->  numero_jugada_blanco MOVIMIENTO
+
+J2  ->  COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO
+J2  ->  numero_jugada_negro MOVIMIENTO COMENTARIO
+J2  ->  numero_jugada_negro MOVIMIENTO
+J2  ->  MOVIMIENTO COMENTARIO
+J2  ->  COMENTARIO
+J2  ->  MOVIMIENTO

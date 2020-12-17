@@ -10,6 +10,7 @@ capturas_por_partida = []
 capturas_texto_por_partida = []
 captura_texto = ""
 ultima_jugada = 0
+ganadores = []
 
 def p_start(p):
     '''S    :   METADATA JUGADAS S'''
@@ -99,16 +100,27 @@ def p_movimiento_final(p):
                         |   empate'''
     global ultima_jugada
     ultima_jugada = 0
+    global ganadores
+    
+    ganador = "blanco" if p[1] == "1-0" else "negro" if p[1] == "0-1" else "empate"
+    ganadores.append(ganador)
     
 def p_jugada(p):
     '''JUGADA   :   numero_jugada_blanco MOVIMIENTO J2'''
     numero_jugada = int(p[1].split(".")[0])
+
     global ultima_jugada
     if numero_jugada != ultima_jugada + 1:
         raise LexerError("Número de Jugada invalido: llegó {} y se esperaba {}".format(numero_jugada, ultima_jugada + 1))
-
-    ultima_jugada += 1
     
+    ultima_jugada += 1
+
+    if(p[3]['tiene_num']):
+        numero_jugada_aparte = int(p[3]['numero_aparte'].split("...")[0])
+
+        if numero_jugada_aparte != numero_jugada:
+            raise LexerError("ERROR - Número de jugada del jugador negro no coincide con la del blanco, llegó {} y se esperaba {}".format(numero_jugada_aparte, numero_jugada))
+
     p[0] = {'cantidad_capturas': p[2]['tiene_captura'] + p[3]['cantidad_capturas']}
     p[0]['captura_texto'] = ""
     
@@ -125,7 +137,7 @@ def p_jugada_2(p):
 
     global ultima_jugada
     if numero_jugada != ultima_jugada + 1:
-        raise LexerError("Número de Jugada invalido: llegó {} y se esperaba {}".format(numero_jugada, ultima_jugada + 1))
+        raise LexerError("ERROR - Número de Jugada invalido, llegó {} y se esperaba {}".format(numero_jugada, ultima_jugada + 1))
     
     ultima_jugada += 1
     
@@ -136,38 +148,53 @@ def p_jugada_2(p):
 
 def p_J2(p):
     '''J2   :   COMENTARIO numero_jugada_negro MOVIMIENTO COMENTARIO'''
+    
     p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + p[3]['tiene_captura'] + p[4]['cantidad_capturas']}
     p[0]['captura_texto'] = p[1]['captura_texto'] + " " + p[3]['captura_texto'] + " " + p[4]['captura_texto']
+    p[0]['numero_aparte'] = p[2]
+    p[0]['tiene_num'] = True
     
 def p_J22(p):
     '''J2   :   COMENTARIO numero_jugada_negro MOVIMIENTO '''
+    
     p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + p[3]['tiene_captura']}
     p[0]['captura_texto'] = p[1]['captura_texto'] + " " + p[3]['captura_texto'] + " "
+    p[0]['numero_aparte'] = p[2]
+    p[0]['tiene_num'] = True
 
 def p_J23(p):
     '''J2   :   numero_jugada_negro MOVIMIENTO COMENTARIO '''
+
     p[0] = {'cantidad_capturas': p[2]['tiene_captura'] + p[3]['cantidad_capturas']}
     p[0]['captura_texto'] = p[2]['captura_texto'] + " " + p[3]['captura_texto']
+    p[0]['numero_aparte'] = p[1]
+    p[0]['tiene_num'] = True
 
 def p_J24(p):
     '''J2   :   numero_jugada_negro MOVIMIENTO'''
+
     p[0] = {'cantidad_capturas': p[2]['tiene_captura']} 
     p[0]['captura_texto'] = p[2]['captura_texto']
+    p[0]['numero_aparte'] = p[1]
+    p[0]['tiene_num'] = True
 
 def p_J2_comentario(p):
-    '''J2 : COMENTARIO'''
+    '''J2   :   COMENTARIO'''
     p[0] = {'cantidad_capturas': p[1]['cantidad_capturas']}
     p[0]['captura_texto'] = p[1]['captura_texto']
+    p[0]['tiene_num'] = False
 
 def p_J2_movimiento(p):
-    '''J2 : MOVIMIENTO'''
+    '''J2   :   MOVIMIENTO'''
     p[0] = {'cantidad_capturas': p[1]['tiene_captura']}
     p[0]['captura_texto'] = p[1]['captura_texto']
+    p[0]['tiene_num'] = False
 
 def p_J2_movimiento_comentario(p):
-    '''J2 : MOVIMIENTO COMENTARIO'''
+    '''J2   :   MOVIMIENTO COMENTARIO'''
     p[0] = {'cantidad_capturas': p[1]['tiene_captura'] + p[2]['cantidad_capturas']}
     p[0]['captura_texto'] = p[1]['captura_texto'] + " " + p[2]['captura_texto']
+    p[0]['tiene_num'] = False
     
 def p_movimiento(p):
     '''MOVIMIENTO   :   token_movimiento ESPECIAL'''
@@ -282,6 +309,8 @@ if __name__ == '__main__':
         capturas_texto_por_partida.reverse()
         print("Cantidad de capturas por partida: ", capturas_por_partida)
         print("Capturas por partida: ", capturas_texto_por_partida)
+        print("Cantidad de capturas totales: ", sum(capturas_por_partida))
+        print("Ganadores: ", ganadores)
         # print("Capturas: {}".format(captura_texto))
     
     f.close()
