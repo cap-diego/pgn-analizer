@@ -46,28 +46,8 @@ tokens = (
 # )
 
 # Regular expression rules for simple tokens
-# t_enroque_1 = r'O-O-O'
-# t_enroque_2 = r'O-O'
-# t_gano_blanco  = r'1-0'
-# t_gano_negro  = r'0-1'
-# t_empate  = r'1\/2-1\/2'
-# t_corchete_abre  = r'\['
-# t_corchete_cierra  = r'\]'
-# t_llave_abre  = r'\{'
-# t_llave_cierra  = r'\}'
-# t_parentecis_abre  = r'\('
-# t_parentecis_cierra  = r'\)'
-# t_comilla  = r'\"'
-# t_punto  = r'\.'
 t_jaque  = r'\+'
 t_jaque_mate  = r'\#'
-# t_pieza  = r'[PNBRQK]'
-# t_columna  = r'[a-h]'
-# t_fila  = r'[1-8]'
-# t_palabra = r'[a-zA-Z]+|\?|\-|\,' # r'[a-zA-Z]+'
-# t_equis = r'x'
-# t_espacio = r'\s'
-# t_renglon = r'\n'
 
 
 def t_espacio(t):

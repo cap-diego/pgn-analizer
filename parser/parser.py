@@ -15,7 +15,7 @@ ganadores = []
 def p_start(p):
     '''S    :   METADATA JUGADAS S'''
     p[0] = {'cantidad_capturas': p[2]['cantidad_capturas']}
-    p[0]['captura_texto'] = p[2]['captura_texto'] + " " + p[3]['captura_texto']
+    p[0]['captura_texto'] = p[2]['captura_texto']
 
     global cantidad_capturas  
     global captura_texto
@@ -60,8 +60,8 @@ def p_start_jugadas(p):
 
 def p_start_jugadas_s(p):
     '''S    :   JUGADAS S'''
-    p[0] = {'cantidad_capturas': p[1]['cantidad_capturas'] + p[2]['cantidad_capturas']}
-    p[0]['captura_texto'] = p[1]['captura_texto'] + " " + p[2]["captura_texto"]
+    p[0] = {'cantidad_capturas': p[1]['cantidad_capturas']}
+    p[0]['captura_texto'] = p[1]['captura_texto']
     
     global cantidad_capturas  
     global captura_texto
@@ -253,14 +253,14 @@ def p_com2(p):
     p[0]['captura_texto'] = p[2]['captura_texto']
 
 def p_com3(p):
-    '''COM  :   MOVIMIENTO_OPCIONAL COM
-            |   MOVIMIENTO_OPCIONAL'''
+    '''COM  :   token_movimiento COM
+            |   token_movimiento'''
     
     val = 0 if len(p) <= 2 else p[2]['cantidad_capturas']
-    p[0] = {'cantidad_capturas' : p[1]['cantidad_capturas'] + val}
+    p[0] = {'cantidad_capturas' : (1 if "x" in str(p[1]).lower() else 0) + val}
 
     val2 = "" if len(p) <= 2 else  p[2]['captura_texto']
-    p[0]['captura_texto'] = p[1]['captura_texto'] + " " + val2
+    p[0]['captura_texto'] = (p[1] if "x" in str(p[1]).lower() else "") + " " + val2
 
 def p_com4(p):
     '''COM  :   COMENTARIO COM
@@ -271,10 +271,10 @@ def p_com4(p):
     val2 = "" if len(p) <= 2 else  p[2]['captura_texto']
     p[0]['captura_texto'] = p[1]['captura_texto'] + " " + val2
 
-def p_movimiento_opcional(p):
-    '''MOVIMIENTO_OPCIONAL  :   token_movimiento'''
-    p[0] = {'cantidad_capturas': 1 if "x" in str(p[1]).lower() else 0}
-    p[0]['captura_texto'] = p[1] if "x" in str(p[1]).lower() else ""
+# def p_movimiento_opcional(p):
+#     '''MOVIMIENTO_OPCIONAL  :   token_movimiento'''
+#     p[0] = {'cantidad_capturas': 1 if "x" in str(p[1]).lower() else 0}
+#     p[0]['captura_texto'] = p[1] if "x" in str(p[1]).lower() else ""
     
 
 def p_comentario_real(p):

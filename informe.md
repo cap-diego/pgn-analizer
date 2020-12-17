@@ -45,12 +45,14 @@ Luego utilizaremos la herramienta PLY y YACC que es una combinación de extensio
 Haciendo uso de esto, implementaremos nuestra gramática para generar un parser y evaluar los distintos ejemplos de archivos provistos por la cátedra más algunos que encontramos nosotros durante el proceso de investigación.
 
 ## **Gramática**
-Comencemos describiendo la gramática sin los atributos, esta será una gramática libre de contexto que valide que una cadena pertenezca al lenguaje de los archivos PGN.
-Tenemos las siguientes producciones:
 
-### **Terminales**
+<!-- Comencemos describiendo la gramática sin los atributos, esta será una gramática libre de contexto que valide que una cadena pertenezca al lenguaje de los archivos PGN. -->
 
-Los siguientes símbolos son terminales en nuestra gramática:
+En esta sección se describen los detalles relacionados a la gramática que utilizamos para reconocer el formato PGN. Durante el desarrollo del TP esta gramática tuvo algunos cambios importantes debido a que las herramientas que utilizamos estaban orientadas crear parsers LR, uno de ellos es que eliminamos todas las producciones lambda ya que causaban conflictos en las tablas.
+
+Las diferentes partes de nuestra gramática son las siguientes:
+
+### **Símbolos Terminales**
 
 - `corchete_abre`
 - `corchete_cierra`
@@ -71,9 +73,7 @@ Los siguientes símbolos son terminales en nuestra gramática:
 - `jaque_mate`
 - `token_movimiento`
 
-### **No Terminales**
-
-Los siguientes símbolos son no terminales en nuestra gramática:
+### **Símbolos No Terminales**
 
   - `S`
   - `METADATA`
@@ -136,11 +136,11 @@ MOVIMIENTO_FINAL → gano_blanco
                  | llave_abre llave_cierra
                  | parentecis_abre parentecis_cierra
 
-             COM → MOVIMIENTO_OPCIONAL COM
+             COM → token_movimiento COM
                  | COMENTARIO COM
                  | palabra COM
                  | espacio COM
-                 | MOVIMIENTO_OPCIONAL
+                 | token_movimiento
                  | COMENTARIO
                  | palabra
                  | espacio
@@ -388,10 +388,10 @@ COMENTARIO → parentecis_abre parentecis_cierra
 }
 ```
 ```javascript
-COM1 → MOVIMIENTO_OPCIONAL COM2
+COM1 → token_movimiento COM2
 {
-  COM1.cantidad_capturas = int(MOVIMIENTO_OPCIONAL.tiene_captura) + COM2.cantidad_capturas
-  COM1.captura_texto = MOVIMIENTO_OPCIONAL.captura_texto ++ COM2.captura_texto
+  COM1.cantidad_capturas = IF("x" in token_movimiento.val, 1, 0)) + COM2.cantidad_capturas
+  COM1.captura_texto = IF("x" in token_movimiento.val, token_movimiento.val, "") ++ COM2.captura_texto
 }
 ```
 ```javascript
@@ -416,10 +416,10 @@ COM1 → espacio COM2
 }
 ```
 ```javascript
-COM → MOVIMIENTO_OPCIONAL
+COM → token_movimiento
 {
-  COM.cantidad_capturas = MOVIMIENTO_OPCIONAL.cantidad_capturas
-  COM.captura_texto = MOVIMIENTO_OPCIONAL.captura_texto
+  COM.cantidad_capturas = IF("x" in token_movimiento.val, 1, 0)
+  COM.captura_texto = IF("x" in token_movimiento.val, token_movimiento.val, "")
 }
 ```
 ```javascript
@@ -443,15 +443,10 @@ COM → espacio
   COM.captura_texto = ""
 }
 ```
-```javascript
-MOVIMIENTO_OPCIONAL  →   token_movimiento
-{
-  MOVIMIENTO_OPCIONAL.tiene_captura = IF("x" in token_movimiento.val, true, false)
-  MOVIMIENTO_OPCIONAL.captura_texto = IF("x" in token_movimiento.val, token_movimiento.val, "")
-}
-```
 
 ## **Desarrollo**
+
+Como mencionamos anteriormente utilizamos PLY y YACC para construir nuestro programa, estas herramientas requerían que programemos un Lexer y un Parser para poder reconocer nuestro lenguaje. Debido a como funcionan esas herramientas el código que parsea las reglas de los atributos no es una copia 1:1 con las escritas anteriormente, esto se explicará mejor en la sección del Parser. También como las herramientas están pensadas para generar parsers LR nuestra gramática fué afectada, tuvimos que eliminar todas las producciones lambda de la misma para evitar problemas en las tablas LALR.
 
 ### **Lexer en Python**
 TODO
@@ -463,7 +458,11 @@ TODO
 TODO
 
 ## **Conclusión**
-TODO
+Para llegar a un parser funcional tuvimos que hacer un proceso iterativo incremental bastante amplio entre la implementación y la gramática, las limitaciones de la librería no nos permitieron programar la gramática de una forma tan libre como las definimos en clase y tuvimos que reformularla.
+
+A pesar de esto, en relativamente poco tiempo logramos desarrollar un parser de un lenguaje bastante complejo que calculaba todos los datos pedidos, eso demuestra la gran capacidad de los parsers autogenerados, aunque falta mucho desarrollo sobre las herramientas como PLY para que sean realmente útiles en la práctica.
+
+El proyecto quedó con muchas producciones y por lo tanto muy largo debido a la simplificación que tuvimos que hacer para poder utilizar la libería, esto puede generar confusión especialmente en proyectos de mayor embergadura, 
 
 <!-- 
 | hola | aur  | fssf |

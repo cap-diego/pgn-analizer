@@ -31,4 +31,8 @@ e5 es muy común} } 1... e4 1-0
 
 [Evento "Grand Prix"]
 
-1. Nf3 Nf6 2. O-O e2 3. O-O-O 1/2-1/2 
+1. Nf3 Nxf6 2. O-O e2 3. O-O-O 1/2-1/2 
+
+[Evento "Grand Prix"]
+
+1. Nf3 Nxf6 2. O-O e2 3. O-O-O 1/2-1/2 
