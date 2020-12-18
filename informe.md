@@ -477,13 +477,80 @@ Los atributos sintetizados son programados mediante el parametro de entrada de l
 
 YACC no soporta utilizar el arreglo `p` para calcular atributos heredados, por lo que tuvimos que resolverlo mediante el uso de variables globales. Esto nos permitió calcularlos correctamente pero no se pudo realizar de una forma que sea exactamente igual a como se escribieron en la gramática.
 
+Una vez calculadas las secuencias de los puntajes y capturas se tienen que invertir, ya que son calculadas en orden inverso.
+
 ### **Ejecuciones de prueba**
 
 En ésta sección mostraremos los resultados de ejecutar algunos archivos en nuestro programa.
 
-#### **Casos válidos**
+### **Casos válidos**
 
-#### **Casos no válidos**
+#### **Archivo**: entrada_valida.txt
+
+Output:
+
+```
+Parseando . . . 
+Lectura Finalizada 
+Cantidad de capturas por partida:  [14, 0] 
+Capturas por partida: 
+Partida 1: [ 6.Bxg5, 7. hxg5 Qxg5 , 10.Qxg7 Nxd5., 11. exf6 gxf6 , 12. Nxd5., 17.Bxe4 dxe4 Rxe4 , 18. Bxe4 dxe4 , 19. Nxe4 , ] 
+Partida 2: [ ] 
+Cantidad de capturas totales:  14 
+Ganadores:  ['blanco', 'blanco'] 
+```
+
+#### **Archivo**: loco.txt
+
+Output:
+
+```
+Parseando . . .  
+Lectura Finalizada 
+Cantidad de capturas por partida:  [67, 11, 7, 0, 12, 2, 1, 27, 5, 6, 10] 
+Capturas por partida:  
+Partida 1: [ 2. Bhxb6 ,10. Qxh7 , 13. Qxe2 , 14. Rxc3 , 15.Kxa8? B3xg8Nxf3Rxh2 Qxb2Rxd2 Bxh2 Kxd7 Qxg6 Bcxa3 Rxd5+Kxa1 Pxb8 Kxf3 Pxa4 Pxa6Bxh8 Paxg7Nxg3 Bxd1 Ncxf8 Rxd4 Kxb8 Pcxg8Nxc3 Pxe3 Khxe3 Q6xb1 Qxc3 Qxc1 Bxb7 Kxg6Qxg1Qxc4 Qxe3Kxf6 K7xa6 R7xg6 Rxa2 Qxe6 Nxa6 Rxc4Rgxa4 Qxb8Nxf3Nxb4 Qxc8Qxc3+ Pxg8 Nxe6Pxc4 Rxe4 , 22. Kxb3 , 23. Bxa7 , 28. K1xd6 ,32. Bxe3+ Kxc1 ,38.Nxh8 Pxc4Bxf4Kgxh2, 41.Nxc2, 42. Qxb1 ,] 
+Partida 2: [1. Kgxb6# Kxh6 Bxd8 Pxf4 P5xg1Kxa4Nxh5B4xe7, 4. Qxa1 Rxd5 Rxe4,] 
+Partida 3: [1. Kxf3 ,7. Bxd2 ,9. Qxb6 ,13. Phxb3 , 18. Kxd8 , 19. Pdxc7 , 22. Bexf7 , ] 
+Partida 4: [ ] 
+Partida 5: [1. Pxd5 ,3. P5xe7 , 16. Nxc4 Bxe1 , 21. Kxd6 , 22. Qxb7 , 25. Bxf4 ,27. Bxc5 , 30. Rxf3 ,32. Rxh8 , 33. Pxe4 ,35. Paxd1 ,] 
+Partida 6: [1. Qxe8,3. Kxe7 ,] 
+Partida 7: [1. Rxd3 , ] 
+Partida 8: [5. Nxh8 , 6. Bxe7 , 7. Pxh7 ,9. Qxg5 ,11. Rxe5 ,17. Q4xb1 , 20. Rxe2 ,22. Kxb5 Pxa2 ,26. Qxg6 , 31. Rxe8 Re1xa3+Bxg2, 32. Khxc7 ,36. Kxf4 Kxe3 Bxb4K4xa2 Pxa1Nxh5 Kxg1 Nxh5Kfxb3,40. Nxa2 , 43. Kxh7 ,45.Bxe1, 52. P1xd2 , ] 
+Partida 9: [3. Kxc7 Pxa2 , 6. Bxa5 , 9. Pxe5 ,11. Kxf4 ,] 
+Partida 10: [ 2. Rxg5 , 7. Rxg1 ,9.Qxd8 , 10. Bxb5 , 11. Qxd4 ,17.Bxa5 , ] 
+Partida 11: [3. Pxh5 ,9. Rxf6 Rxh4Bxg1 Pxa3 Kxc1Bxg8,13. Pxa1 ,15. Bxa3 ,29. Qxd5 , ] 
+Cantidad de capturas totales:  148 
+Ganadores:  ['blanco', 'blanco', 'blanco', 'empate', 'empate', 'blanco', 'negro', 'empate', 'blanco', 'negro', 'negro'] 
+```
+
+### **Casos no válidos**
+
+#### **Archivo**: error_falta_).txt
+
+Output:
+
+```
+Parseando . . .
+ERROR - Los paréntesis o corchetes de comentarios no están balanceados
+```
+
+#### **Archivo**: numero_jugada_incorrecto.txt
+
+Output:
+
+```
+Parseando . . .
+Número de Jugada invalido: llegó 7 y se esperaba 3
+```
+
+#### **Archivo**: jugada_negro_falla.txt
+
+Output:
+```
+Parseando . . .
+ERROR - Número de jugada del jugador negro no coincide con la del blanco, llegó 17 y se esperaba 2
+```
 
 ## **Conclusión**
 Para llegar a un parser funcional tuvimos que hacer un proceso iterativo incremental bastante amplio entre la implementación y la gramática, las limitaciones de la librería no nos permitieron programar la gramática de una forma tan libre como las definimos en clase y tuvimos que reformularla.

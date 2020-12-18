@@ -78,28 +78,32 @@ def t_llave_abre(t):
     r'\{'
     global en_comentario
     en_comentario += 1
+    #print(en_comentario)
     return t
 
 def t_llave_cierra(t):
     r'\}'
     global en_comentario
     en_comentario -= 1
+    #print(en_comentario)
     return t
 
 def t_parentecis_abre(t):
     r'\('
     global en_comentario
     en_comentario += 1
+    #print(en_comentario)
     return t
 
 def t_parentecis_cierra(t):
     r'\)'
     global en_comentario
     en_comentario -= 1
+    #print(en_comentario)
     return t
 
 def t_palabra(t):
-    r'[^(\s|\"|\]|\[|\{|\})]+'
+    r'[^(\s|\"|\]|\[|\{|\}|\(|\))]+'
     global leer_renglones
     global en_metadata
 

@@ -3,6 +3,7 @@ import sys
 
 # Importar mapa de tokens del lexer.
 from tokenizer import tokens
+import tokenizer
 
 # Definicion de atributos 
 movimiento_tiene_captura = False
@@ -285,10 +286,14 @@ class LexerError(BaseException): pass
 def p_error(p):
     # p[0].valid = False
     if p is None:
-        print("Llegó a EOF")
+        #print(tokenizer.en_comentario)
+        if tokenizer.en_comentario != 0:
+            raise LexerError("ERROR - Los paréntesis o corchetes de comentarios no están balanceados")
+        else:
+            raise LexerError("ERROR - Llegó a EOF sin terminar de procesar")
     else:
-        print("TOKEN QUE CAUSO EL ERROR: ", p)
-        raise LexerError("Input invalido")
+        #print("Error, token {} no esperado".format(p.value))
+        raise LexerError("ERROR - token {} no esperado en línea {}".format(p.type, p.lineno))
 
 # Build the parser
 parser = yacc.yacc(debug=True)
