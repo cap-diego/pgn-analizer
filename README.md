@@ -4,15 +4,17 @@
 
 1. [Objetivo](#objetivo)
 
- 2. [Constraints del problema](#constraints)
+2. [Constraints del problema](#constraints)
 
 3. [Ejemplos](#ejemplos)
 
 4. [Solución](#solucion)
 
-5. [Ejemplo de corrida](#ejemplocorrida)
+5. [Dependencias](#dependencias)
 
-6. [TODO](#todo)
+6. [Ejemplo de corrida](#ejemplocorrida)
+
+7. [TODO](#todo)
 
 ### Objetivo <a name="objetivo"></a>
 - Verificar la sintaxis de un PNG
@@ -225,6 +227,7 @@ Ganadores:  ['blanco', 'blanco', 'blanco', 'empate', 'empate', 'blanco', 'negro'
 
 ### **Casos no válidos**
 <details><summary>Ver más</summary>  
+
 #### **Archivo**: error_falta_).txt
 
 Output:
@@ -244,11 +247,15 @@ Número de Jugada invalido: llegó 7 y se esperaba 3
 ```
 </details>
 
+
+### Dependencias <a name="dependencias"></a>
+ - python3
+ - ply (versión 3.11)
 ### Ejemplo corrida <a name="ejemplocorrida"></a>
 - Situados en el directorio principal:
-  - ```python
-        python parser/parser.py parser/entrada_valida.txt
-    ```
+  - ```python 
+     python parser/parser.py parser/entrada_valida.txt
+   ```
 
  ### Todo: <a name="todo"></a>
   - Agregar al readme las reglas para cada producción
